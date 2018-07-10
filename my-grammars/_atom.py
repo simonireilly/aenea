@@ -21,7 +21,7 @@ class AtomRule(MappingRule):
             # Select  an instance
             'select instance': Key('c-d'),
             # Select all instances
-            'select instances': Key('cs-d'),
+            'select instances': Key('a-f3'),
 
             ## File commands
 

@@ -13,6 +13,8 @@ terminal_context = aenea.wrappers.AeneaContext(
 
 class TerminalRule(MappingRule):
     mapping = {
+            # Reserved words
+            'master': Text('sudo '),
             # Managing folders and files.
             'folders': Text('ls') + Key('enter'),
             'Add folder': Text('mkdir '),
@@ -45,8 +47,23 @@ class ApplicationRule(MappingRule):
             'doctor': Text('docker '),
             'launch (adam | atom)': Text('atom '),
             'launch (chrome)': Text('google-chrome '),
+            # Rails commands
             'bundle install': Text('bundle install'),
             'bundle update': Text('bundle update'),
+        }
+    extras = [
+        Dictation("text"),
+        IntegerRef("n", 1, 100),
+    ]
+    defaults = {
+        "n": 1,
+    }
+
+class ShiftRule(MappingRule):
+    mapping = {
+            # Launching the application
+            'shifty services': Text('sudo docker-compose -f docker-compose-development.yml up'),
+            'shifty start': Text('./bin/boot_with_docker')
         }
     extras = [
         Dictation("text"),
@@ -61,6 +78,7 @@ class ApplicationRule(MappingRule):
 grammar = Grammar("terminal", context=terminal_context) # Create grammar
 grammar.add_rule(TerminalRule())  # Add the top-level rule.
 grammar.add_rule(ApplicationRule())  # Add the top-level rule.
+grammar.add_rule(ShiftRule())  # Add the shift rule
 grammar.load()  # Load the grammar.
 
 def unload():
