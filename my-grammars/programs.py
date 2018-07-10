@@ -72,13 +72,14 @@ class ProgramsRule(MappingRule):
         'open [new] tab': Key('c-t'),
         'close tab': Key('c-w'),
 
-        # Xfce-like desktop environment commands
+         # Application management keys
         'window ping': Key('w-left'),
         'window pong': Key('w-right'),
         'window swap [<n>]': Key('alt:down, tab:%(n)d, alt:up'),
         'really close window': Key('a-f4'),
         'maximize window': Key('cw-up'),
         'minimize window': Key('cw-down'),
+        'window [<n>]': Key('w-%(n)s')
     }
     extras = [
         Dictation("text"),
