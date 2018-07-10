@@ -75,7 +75,7 @@ class ProgramsRule(MappingRule):
         # Xfce-like desktop environment commands
         'window ping': Key('w-left'),
         'window pong': Key('w-right'),
-        'window swap [<n>]': Key('alt:down/100, tab:%(n)d, alt:up'),
+        'window swap [<n>]': Key('alt:down, tab:%(n)d, alt:up'),
         'really close window': Key('a-f4'),
         'maximize window': Key('cw-up'),
         'minimize window': Key('cw-down'),
