@@ -1,7 +1,5 @@
 # This is a dragonfly module for atom
 
-LEADER = 'comma'
-
 from aenea import *
 
 atom_context = aenea.wrappers.AeneaContext(
@@ -26,7 +24,7 @@ class AtomRule(MappingRule):
             # Select specific tab
             'cheek': Key('a-%(n)d'),
             # Show the file
-            'peak': Key('cs-backslash')
+            'peak': Key('ctrl:down, shift:down, backslash, ctrl:up, shift:up'),
 
             ## File commands
 

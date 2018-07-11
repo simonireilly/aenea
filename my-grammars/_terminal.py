@@ -62,8 +62,8 @@ for command in gitcommand_array:
 class GitRule(MappingRule):
     mapping = {
         # Git
-        "command (git|get)": Text("git "),
-        "command (git|get) <gitcommand>": Text("git %(gitcommand)s "),
+        "(git|get)": Text("git "),
+        "(git|get) <gitcommand>": Text("git %(gitcommand)s "),
     }
     extras = [
         Dictation("text"),
