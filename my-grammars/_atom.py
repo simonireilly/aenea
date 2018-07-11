@@ -1,5 +1,4 @@
-# This is a template.
-# Please replace this with your own documentation.
+# This is a dragonfly module for atom
 
 LEADER = 'comma'
 
@@ -22,13 +21,25 @@ class AtomRule(MappingRule):
             'select instance': Key('c-d'),
             # Select all instances
             'select instances': Key('a-f3'),
+            # Select specific tab
+            'lethal [<n>]': Key('a-%(n)d'),
+            # Select specific tab
+            'cheek': Key('a-%(n)d'),
 
             ## File commands
 
+            # Open a new file
+            'new file': Key('c-n'),
             # Set the language
             'set language': Key('cs-l'),
             # Go to row
             'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
+            # Expand selection
+            'puff': Key('a-up'),
+            # Reduce selection
+            'duff': Key('a-down'),
+            # Toggle comment
+            'note': Key('c-slash'),
         }
     extras = [
         Dictation("text"),
