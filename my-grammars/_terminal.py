@@ -1,8 +1,5 @@
 # Dragonfly module for controlling the Linux terminal
-# The context of this file will be strictly for terminal use.
-
-
-LEADER = 'comma'
+# The context of this file will be strictly for terminal use
 
 from aenea import *
 
@@ -29,11 +26,49 @@ class TerminalRule(MappingRule):
             # Clearing and cancelling actions.
             'soft close': Key('c-c'),
             'hard close': Key('c-z'),
-
         }
     extras = [
         Dictation("text"),
         IntegerRef("n", 1, 100),
+    ]
+    defaults = {
+        "n": 1,
+    }
+
+gitcommand_array = [
+    'add',
+    'branch',
+    'checkout',
+    'clone',
+    'commit',
+    'diff',
+    'fetch',
+    'init',
+    'log',
+    'merge',
+    'pull',
+    'push',
+    'rebase',
+    'reset',
+    'show',
+    'stash',
+    'status',
+    'tag',
+]
+gitcommand = {}
+for command in gitcommand_array:
+    gitcommand[command] = command
+
+class GitRule(MappingRule):
+    mapping = {
+        # Git
+        "command (git|get)": Text("git "),
+        "command (git|get) <gitcommand>": Text("git %(gitcommand)s "),
+    }
+    extras = [
+        Dictation("text"),
+        IntegerRef("n", 1, 100),
+        Choice('gitcommand', gitcommand),
     ]
     defaults = {
         "n": 1,
@@ -50,6 +85,7 @@ class ApplicationRule(MappingRule):
             # Rails commands
             'bundle install': Text('bundle install'),
             'bundle update': Text('bundle update'),
+            'really database':  Text('rails db:')
         }
     extras = [
         Dictation("text"),
@@ -73,10 +109,9 @@ class ShiftRule(MappingRule):
         "n": 1,
     }
 
-
-
 grammar = Grammar("terminal", context=terminal_context) # Create grammar
 grammar.add_rule(TerminalRule())  # Add the top-level rule.
+grammar.add_rule(GitRule())  # At the git rule
 grammar.add_rule(ApplicationRule())  # Add the top-level rule.
 grammar.add_rule(ShiftRule())  # Add the shift rule
 grammar.load()  # Load the grammar.

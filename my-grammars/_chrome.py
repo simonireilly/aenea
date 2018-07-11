@@ -2,12 +2,10 @@
 
 from aenea import *
 
-
 chrome_context = aenea.wrappers.AeneaContext(
     ProxyAppContext(match='regex', title='(?i).*Chrome.*'),
     AppContext(executable='Chrome')
     )
-
 
 class ChromeRule(MappingRule):
     mapping = {

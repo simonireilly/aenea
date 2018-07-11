@@ -7,7 +7,6 @@ import keyboard
 import words
 import programs
 import statics
-import markdown
 
 release = Key("shift:up, ctrl:up, alt:up")
 
@@ -18,16 +17,9 @@ alternatives.append(RuleRef(rule=words.ReFormatRule()))
 alternatives.append(RuleRef(rule=words.NopeFormatRule()))
 alternatives.append(RuleRef(rule=programs.ProgramsRule()))
 alternatives.append(RuleRef(rule=statics.StaticsRule()))
-# alternatives.append(RuleRef(rule=markdown.MarkdownRule()))
 root_action = Alternative(alternatives)
 
 sequence = Repetition(root_action, min=1, max=16, name="sequence")
-
-linux_context = aenea.wrappers.AeneaContext(
-    ProxyAppContext(match='regex', title='(?i).*VirtualBox.*'),
-    AppContext(title='VirtualBox')
-    )
-
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
@@ -49,7 +41,7 @@ class RepeatRule(CompoundRule):
             release.execute()
 
 
-grammar = Grammar("root rule", context=~linux_context)
+grammar = Grammar("root rule")
 grammar.add_rule(RepeatRule())  # Add the top-level rule.
 grammar.load()  # Load the grammar.
 

@@ -25,6 +25,8 @@ class AtomRule(MappingRule):
             'lethal [<n>]': Key('a-%(n)d'),
             # Select specific tab
             'cheek': Key('a-%(n)d'),
+            # Show the file
+            'peak': Key('cs-backslash')
 
             ## File commands
 
