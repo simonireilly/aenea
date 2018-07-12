@@ -24,7 +24,7 @@ class AtomRule(MappingRule):
             # Select specific tab
             'cheek': Key('a-%(n)d'),
             # Show the file
-            'peak': Key('ctrl:down, shift:down, backslash, ctrl:up, shift:up'),
+            'peak': Key('cs-a'),
 
             ## File commands
 
