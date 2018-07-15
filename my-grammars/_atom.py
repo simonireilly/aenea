@@ -12,24 +12,28 @@ class AtomRule(MappingRule):
             ## Global commands
 
             # Search in this file
-            'hunting': Key('c-f'),
+            'hunt': Key('c-f'),
             # Search in all files
-            'hunting everywhere': Key('cs-f'),
+            'hunting': Key('cs-f'),
             # Select  an instance
             'select instance': Key('c-d'),
             # Select all instances
             'select instances': Key('a-f3'),
             # Select specific tab
             'lethal [<n>]': Key('a-%(n)d'),
-            # Select specific tab
-            'cheek': Key('a-%(n)d'),
             # Show the file
             'peak': Key('cs-a'),
+            # Toggle git
+            'staging': Key('c-9'),
 
             ## File commands
 
             # Open a new file
             'new file': Key('c-n'),
+            # Find a file
+            'find file': Key('c-t'),
+            # Close file
+            'close file': Key('c-w'),
             # Set the language
             'set language': Key('cs-l'),
             # Go to row
