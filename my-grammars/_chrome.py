@@ -18,7 +18,8 @@ class ChromeRule(MappingRule):
         'next tab [<n>]': Key('c-pgdown:%(n)d'),
         'open [new] tab': Key('c-t'),
         'close tab': Key('c-w'),
-        'lethal [<n>]': Key('c-%(n)s')
+        'lethal [<n>]': Key('c-%(n)s'),
+        'dev tools': Key('cs-i'),
     }
     extras = [
         Dictation("text"),
