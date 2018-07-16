@@ -99,7 +99,8 @@ class ShiftRule(MappingRule):
     mapping = {
             # Launching the application
             'shifty services': Text('sudo docker-compose -f docker-compose-development.yml up'),
-            'shifty start': Text('./bin/boot_with_docker')
+            'shifty start': Text('./bin/boot_with_docker'),
+            'shifty post': Text('psql -p 5432 -h localhost -U postgres')
         }
     extras = [
         Dictation("text"),
