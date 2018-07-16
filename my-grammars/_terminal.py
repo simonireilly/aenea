@@ -85,7 +85,8 @@ class ApplicationRule(MappingRule):
             # Rails commands
             'bundle install': Text('bundle install'),
             'bundle update': Text('bundle update'),
-            'really database':  Text('rails db:')
+            'bundle exec': Text('bundle exec'),
+            'really database':  Text('rails db:'),
         }
     extras = [
         Dictation("text"),
@@ -100,7 +101,7 @@ class ShiftRule(MappingRule):
             # Launching the application
             'shifty services': Text('sudo docker-compose -f docker-compose-development.yml up'),
             'shifty start': Text('./bin/boot_with_docker'),
-            'shifty post': Text('psql -p 5432 -h localhost -U postgres')
+            'shifty post': Text('psql -p 5432 -h localhost -U postgres'),
         }
     extras = [
         Dictation("text"),

@@ -19,7 +19,7 @@ class ChromeRule(MappingRule):
         'open [new] tab': Key('c-t'),
         'close tab': Key('c-w'),
         'lethal [<n>]': Key('c-%(n)s'),
-        'dev tools': Key('cs-i'),
+        'developer tools': Key('cs-i'),
     }
     extras = [
         Dictation("text"),
