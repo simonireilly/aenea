@@ -82,10 +82,11 @@ class ApplicationRule(MappingRule):
             'doctor': Text('docker '),
             'launch (adam | atom)': Text('atom '),
             'launch (chrome)': Text('google-chrome '),
+            '(note | node) package manager': Text('npm '),
             # Rails commands
             'bundle install': Text('bundle install'),
             'bundle update': Text('bundle update'),
-            'bundle exec': Text('bundle exec'),
+            'bundle exec': Text('bundle exec '),
             'really my':  Text('rails db:migrate'),
         }
     extras = [
