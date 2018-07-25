@@ -12,7 +12,7 @@ class MarkdownRule(MappingRule):
             'checkbox': Text('- []'),
 
             # Blocked syntaxes
-            'codebook [<text>]': Text('```%(text)s') + Key('enter') + Text('```')
+            'cookbook [<text>]': Text('```%(text)s') + Key('enter') + Text('```')
 
         }
     extras = [
