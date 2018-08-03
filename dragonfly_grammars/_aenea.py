@@ -21,6 +21,7 @@
 
 import os
 import sys
+import shutil
 
 import dragonfly
 
@@ -94,6 +95,7 @@ def reload_code():
     # Do not reload anything in these directories or their subdirectories.
     dir_reload_blacklist = set(["core"])
     macro_dir = "C:\\NatLink\\NatLink\\MacroSystem"
+    source_dir = r"\\VBOXSVR\aenea\dragonfly_grammars"
 
     # Unload all grammars if natlinkmain is available.
     if natlinkmain:
@@ -123,6 +125,14 @@ def reload_code():
                 # end with __init__.pyc so this # takes care of them as well.
                 del sys.modules[name]
 
+    # Copy in the new source files from the remote directory
+    #
+    src_files = os.listdir(source_dir)
+    for file_name in src_files:
+        full_file_name = os.path.join(source_dir, file_name)
+        if (os.path.isfile(full_file_name)):
+            shutil.copy(full_file_name, macro_dir)
+            print "copied %s" % full_file_name
     try:
         # Reload the top-level modules in macro_dir if natlinkmain is available.
         if natlinkmain:

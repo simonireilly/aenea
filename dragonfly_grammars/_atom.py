@@ -1,6 +1,7 @@
 # This is a dragonfly module for atom
 
 from aenea import *
+# from markdown import MarkdownRule
 
 atom_context = aenea.wrappers.AeneaContext(
     ProxyAppContext(match='regex', title='(?i).*Atom.*'),
@@ -55,6 +56,7 @@ class AtomRule(MappingRule):
 
 grammar = Grammar("Atom", context=atom_context) # Create grammar
 grammar.add_rule(AtomRule()) # Add the rule
+# grammar.add_rule(MarkdownRule()) # Add the rule
 grammar.load()  # Load the grammar.
 
 def unload():
