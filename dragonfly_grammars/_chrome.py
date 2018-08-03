@@ -9,16 +9,16 @@ chrome_context = aenea.wrappers.AeneaContext(
 
 class ChromeRule(MappingRule):
     mapping = {
+        'hunt': Key('c-f'),
+        'developer tools': Key('cs-i'),
         'address bar': Key('a-d'),
         'refresh page': Key('f5'),
         'really refresh page': Key('s-f5'),
         'go back [<n>]': Key('a-left:%(n)d'),
         'go forward [<n>]': Key('a-right:%(n)d'),
-        'previous tab [<n>]': Key('c-pgup:%(n)d'),
-        'next tab [<n>]': Key('c-pgdown:%(n)d'),
-        'open [new] tab': Key('c-t'),
-        'close tab': Key('c-w'),
-        'lethal [<n>]': Key('c-%(n)s'),
+        'Tony new': Key('c-t'),
+        'Tony exit': Key('c-w'),
+        'Tony [<n>]': Key('c-%(n)s'),
         'developer tools': Key('cs-i'),
     }
     extras = [
