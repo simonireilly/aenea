@@ -4,19 +4,25 @@ from aenea import *
 
 class ProgramsRule(MappingRule):
     mapping = {
-        # Application management keys
-        'window ping': Key('w-left'),
-        'window pong': Key('w-right'),
-        'window swap [<n>]': Key('alt:down, tab:%(n)d, alt:up'),
-        'really close window': Key('a-f4'),
-        'maximize window': Key('w-up'),
-        'minimize window': Key('w-down'),
-        'window [<n>]': Key('w-%(n)s')
+    ## Application management keys
+
+    # Pan the current window left
+    'gloss': Key('w-left'),
+    # Pan the current window left
+    'glass': Key('w-right'),
+    # Close the current window
+    'destroy glaze': Key('a-f4'),
+    # Maximise the current window
+    'max glaze': Key('w-up'),
+    # Minimise the current window
+    'min glaze': Key('w-down'),
+    # Open application window
+    'Joe <n>': Key('w-%(n)s')
     }
     extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
+    Dictation("text"),
+    IntegerRef("n", 1, 100),
     ]
     defaults = {
-        "n": 1,
+    "n": 1,
     }

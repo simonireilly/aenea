@@ -3,17 +3,17 @@
 from aenea import *
 # from markdown import MarkdownRule
 
-atom_context = aenea.wrappers.AeneaContext(
-    ProxyAppContext(match='regex', title='(?i).*Atom.*'),
-    AppContext(executable='Atom')
+ruby_mine_context = aenea.wrappers.AeneaContext(
+    ProxyAppContext(match='regex', title='(?i).*RubyMine.*'),
+    AppContext(executable='RubyMine')
     )
 
-class AtomRule(MappingRule):
+class RubyMineRule(MappingRule):
     mapping = {
             ## Global commands
-
+            
             # Auto-indent
-            'indent': Key('cs-i'),
+            'indent': Key('ac-i'),
             # Search in this file
             'hunt': Key('c-f'),
             # Search in all files
@@ -27,24 +27,28 @@ class AtomRule(MappingRule):
             # Show the file
             'peak': Key('cs-a'),
             # Toggle git
-            'staging': Key('c-9'),
+            'staging': Key('a-9'),
+            # Super copy and paste
+            'super plop': Key('cs-v'),
 
             ## File commands
 
             # Open a new file
             'new file': Key('c-n'),
             # Find a file
-            'find file': Key('c-t'),
+            'find file': Key('shift:2'),
             # Close file
             'close file': Key('c-w'),
-            # Set the language
-            'set language': Key('cs-l'),
             # Go to row
             'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
             # Expand selection
-            'puff': Key('a-up'),
+            'puff [<n>]': Key('a-w:%(n)d'),
             # Reduce selection
-            'duff': Key('a-down'),
+            'duff [<n>]': Key('cs-w:%(n)d'),
+            # Move up one method definition
+            'last death': Key('a-up'),
+            # Move down one method definition
+            'next death': Key('a-down'),
             # Toggle comment
             'note': Key('c-slash'),
         }
@@ -56,9 +60,8 @@ class AtomRule(MappingRule):
         "n": 1,
     }
 
-grammar = Grammar("Atom", context=atom_context) # Create grammar
-grammar.add_rule(AtomRule()) # Add the rule
-# grammar.add_rule(MarkdownRule()) # Add the rule
+grammar = Grammar("RubyMine", context=ruby_mine_context) # Create grammar
+grammar.add_rule(RubyMineRule()) # Add the rule
 grammar.load()  # Load the grammar.
 
 def unload():

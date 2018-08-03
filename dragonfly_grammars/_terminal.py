@@ -10,22 +10,24 @@ terminal_context = aenea.wrappers.AeneaContext(
 
 class TerminalRule(MappingRule):
     mapping = {
-            # Reserved words
+            ## Global Commands
+
             'master': Text('sudo '),
             # Managing folders and files.
             'folders': Text('ls') + Key('enter'),
+            # Add a folder
             'Add folder': Text('mkdir '),
             'navigate': Text('cd '),
-            'lethal history': Key('c-r'),
+            'Tony history': Key('c-r'),
             # Managing terminal windows.
-            'lethal [<n>]': Key('a-%(n)s'),
-            'lethal close': Key('c-d'),
-            'lethal new': Key('cs-t'),
-            'lethal clear': Key('c-l'),
-            'lethal clean': Key('c-u'),
+            'Tony [<n>]': Key('a-%(n)s'),
+            'Tony exit': Key('c-d'),
+            'Tony new': Key('cs-t'),
+            'Tony clear': Key('c-l'),
+            'Tony clean': Key('c-u'),
             # Clearing and cancelling actions.
-            'soft close': Key('c-c'),
-            'hard close': Key('c-z'),
+            'soft exit': Key('c-c'),
+            'hard exit': Key('c-z'),
         }
     extras = [
         Dictation("text"),
@@ -100,10 +102,11 @@ class ApplicationRule(MappingRule):
 class ShiftRule(MappingRule):
     mapping = {
             # Launching the application
+
             'shifty services': Text('sudo docker-compose -f docker-compose-development.yml up'),
             'shifty start': Text('./bin/boot_with_docker'),
             'shifty post': Text('psql -p 5432 -h localhost -U postgres'),
-            'shifty test': Text('bundle exec rspec'),
+            'shifty test': Text('bundle exec rspec '),
         }
     extras = [
         Dictation("text"),
