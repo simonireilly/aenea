@@ -227,7 +227,6 @@ grammarCfg.cmd.map = Item(
         "cop [that]":release + Key("c-c/3"),
         "cut [that]": release + Key("c-x/3"),
         "undo [<n>] ": release + Key("ctrl:down, z:%(n)d, ctrl:up"),
-        # This command isn't  working
         "redo [<n>] ": release + Key("ctrl:down, shift:down, z:%(n)d, shift:down, ctrl:up"),
         "blanket": release + Key("c-a/3"),
 
@@ -240,14 +239,17 @@ grammarCfg.cmd.map = Item(
         "release [all]": release,
         "press key <pressKey>": Key("%(pressKey)s"),
 
-        # Closures.
-        "angle brackets": Key("langle, rangle, left/3"),
+        ## Closures.
+
+        "rockets": Key("langle, rangle, left/3"),
+        "sprockets": Key("langle, slash, rangle, left/3"),
+        "dockets": Key("langle, space, slash, rangle, left:3/3"),
         "[square] brackets": Key("lbracket, rbracket, left/3"),
         "[curly] braces": Key("lbrace, rbrace, left/3"),
-        "(parens|parentheses)": Key("lparen, rparen, left/3"),
+        "(parens|parentheses|parasites)": Key("lparen, rparen, left/3"),
         "quotes": Key("dquote/3, dquote/3, left/3"),
         "backticks": Key("backtick:2, left"),
-        "single quotes": Key("squote, squote, left/3"),
+        "Quinn": Key("squote, squote, left/3"),
 
         # Shorthand multiple characters.
         "double <char>": Text("%(char)s%(char)s"),
@@ -279,7 +281,7 @@ grammarCfg.cmd.map = Item(
         'care':        Key('home'),
         '(doll|dole)': Key('end'),
         'chuck [<n>]':       Key('del:%(n)d'),
-        'scratch [<n>]':     Key('backspace:%(n)d'),
+        'tail [<n>]':     Key('backspace:%(n)d'),
         "visual": Key("v"),
         "visual line": Key("s-v"),
         "visual block": Key("c-v"),

@@ -11,7 +11,34 @@ ruby_mine_context = aenea.wrappers.AeneaContext(
 class RubyMineRule(MappingRule):
     mapping = {
             ## Global commands
-            
+
+            ## Navigation commands
+
+            # Find a class
+            'find class': Key('c-n'),
+            # Find a file
+            'find file': Key('cs-n'),
+            # Find a symbol
+            'find ( simple | symbol )': Key('csa-n'),
+            # Find anything
+            'find any': Key('csa-n'),
+            # Recent file
+            'recent file': Key('c-e'),
+            # Close file
+            'close file': Key('c-w'),
+            # Go to row
+            'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
+            # Expand selection
+            'puff [<n>]': Key('c-w:%(n)d'),
+            # Reduce selection
+            'duff [<n>]': Key('cs-w:%(n)d'),
+            # Move up one method definition
+            'last death': Key('a-up'),
+            # Move down one method definition
+            'next death': Key('a-down'),
+
+            ## Formatting commands
+
             # Auto-indent
             'indent': Key('ac-i'),
             # Search in this file
@@ -33,22 +60,6 @@ class RubyMineRule(MappingRule):
 
             ## File commands
 
-            # Open a new file
-            'new file': Key('c-n'),
-            # Find a file
-            'find file': Key('shift:2'),
-            # Close file
-            'close file': Key('c-w'),
-            # Go to row
-            'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
-            # Expand selection
-            'puff [<n>]': Key('a-w:%(n)d'),
-            # Reduce selection
-            'duff [<n>]': Key('cs-w:%(n)d'),
-            # Move up one method definition
-            'last death': Key('a-up'),
-            # Move down one method definition
-            'next death': Key('a-down'),
             # Toggle comment
             'note': Key('c-slash'),
         }
