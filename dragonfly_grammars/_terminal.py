@@ -28,6 +28,14 @@ class TerminalRule(MappingRule):
             # Clearing and cancelling actions.
             'soft exit': Key('c-c'),
             'hard exit': Key('c-z'),
+            # Killing all programs on a port
+            'desiccate': Text('kill -9 $(lsof -ti :)'),
+            # Killing all programs on a port
+            'reveal': Text('lsof -i :'),
+            # Scroll up in the terminal
+            'incline': Key('s-pgdown'),
+            # Scroll down in the terminal
+            'decline': Key('s-pgup')
         }
     extras = [
         Dictation("text"),

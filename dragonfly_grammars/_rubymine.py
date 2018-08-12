@@ -22,6 +22,8 @@ class RubyMineRule(MappingRule):
             'find ( simple | symbol )': Key('csa-n'),
             # Find anything
             'find any': Key('csa-n'),
+            # Find usages of a method or class
+            'usages': Key('as-7'),
             # Recent file
             'recent file': Key('c-e'),
             # Close file

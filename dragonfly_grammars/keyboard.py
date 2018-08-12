@@ -250,6 +250,7 @@ grammarCfg.cmd.map = Item(
         "quotes": Key("dquote/3, dquote/3, left/3"),
         "backticks": Key("backtick:2, left"),
         "Quinn": Key("squote, squote, left/3"),
+        "pillars": Text("||") + Key("left/3"),
 
         # Shorthand multiple characters.
         "double <char>": Text("%(char)s%(char)s"),

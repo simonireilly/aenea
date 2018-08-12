@@ -26,6 +26,7 @@ class ProgramsRule(MappingRule):
     'slacker': Key('w-4'),
     'rubles': Key('w-5'),
     'music': Key('w-6'),
+    'insomnia': Key('w-7'),
 
     }
     extras = [
