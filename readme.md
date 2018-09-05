@@ -1,5 +1,28 @@
 # Aenea
 
-This is my aenea voice recognition build. To be shared on the host machine.
+This is my fork of aenea voice coding system.
 
-The contents of ```my-grammers``` should be synced with the remote machine.
+I use this predominantly for web development. 
+
+My Grammars have been written around the following programs:
+
+## Text Editors
+
+- Atom
+- Sublime
+
+## Browsers
+
+- Chrome - wih the chromium extension
+
+## Command Line Tools
+
+- Git
+- Postgres / psql
+
+## Languages/
+
+- Ruby
+- Javascript
+- SQL
+- Markdown
