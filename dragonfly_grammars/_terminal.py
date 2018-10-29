@@ -2,9 +2,10 @@
 # The context of this file will be strictly for terminal use
 
 from aenea import *
+import terminator
 
 terminal_context = aenea.wrappers.AeneaContext(
-    ProxyAppContext(match='regex', title='(?i).*simon@simon.*'),
+    ProxyAppContext(match='regex', title='(?i).*simon@simon.*'), # app_id='Terminal'
     AppContext(executable='Terminal')
     )
 
@@ -12,30 +13,33 @@ class TerminalRule(MappingRule):
     mapping = {
             ## Global Commands
 
+            # Open folder
+            'open folder': Text('nautilus .') + Key('enter'),
+            # The pseudo command
             'master': Text('sudo '),
             # Managing folders and files.
             'folders': Text('ls') + Key('enter'),
             # Add a folder
             'Add folder': Text('mkdir '),
             'navigate': Text('cd '),
-            'Tony history': Key('c-r'),
+            'historian': Key('c-r'),
             # Managing terminal windows.
             'Tony [<n>]': Key('a-%(n)s'),
-            'Tony exit': Key('c-d'),
-            'Tony new': Key('cs-t'),
-            'Tony clear': Key('c-l'),
-            'Tony clean': Key('c-u'),
+            'Exeter': Key('c-d'),
+            'newer': Key('c-t'),
+            'clearer': Key('c-l'),
+            'cleaner': Key('c-u'),
             # Clearing and cancelling actions.
-            'soft exit': Key('c-c'),
-            'hard exit': Key('c-z'),
+            'squash': Key('ca-c'),
+            'crush': Key('c-z'),
             # Killing all programs on a port
             'desiccate': Text('kill -9 $(lsof -ti :)'),
             # Killing all programs on a port
             'reveal': Text('lsof -i :'),
             # Scroll up in the terminal
-            'incline': Key('s-pgdown'),
+            'decline': Key('s-pgdown'),
             # Scroll down in the terminal
-            'decline': Key('s-pgup')
+            'incline': Key('s-pgup')
         }
     extras = [
         Dictation("text"),
@@ -90,9 +94,7 @@ class ApplicationRule(MappingRule):
             'post': Text('psql '),
             'really': Text('rails '),
             'doctor': Text('docker '),
-            'launch (adam | atom)': Text('atom '),
-            'launch (chrome)': Text('google-chrome '),
-            '(note | node) package manager': Text('npm '),
+            'subtle': Text('subl .') + Key('enter'),
             # Rails commands
             'bundle install': Text('bundle install'),
             'bundle update': Text('bundle update'),
@@ -111,10 +113,30 @@ class ShiftRule(MappingRule):
     mapping = {
             # Launching the application
 
-            'shifty services': Text('sudo docker-compose -f docker-compose-development.yml up'),
-            'shifty start': Text('./bin/boot_with_docker'),
+            'shifty boot': Text('./bin/dev/boot') + Key('enter'),
+            'shifty yawn': Text('./bin/dev/yarn '),
             'shifty post': Text('psql -p 5432 -h localhost -U postgres'),
-            'shifty test': Text('bundle exec rspec '),
+            'shifty console': Text('./bin/dev/console') + Key('enter'),
+            'shifty test': Text('./bin/dev/test '),
+            'shifty rails': Text('./bin/dev/rails '),
+            'shifty bundle': Text('./bin/dev/bundle '),
+            'shifty break': Text('./bin/dev/rake '),
+            'consultant (<text>)': Text("Tenant.switch('%(text)s') {binding.pry}")
+        }
+    extras = [
+        Dictation("text"),
+        IntegerRef("n", 1, 100),
+    ]
+    defaults = {
+        "n": 1,
+    }
+
+class NodeYarnRule(MappingRule):
+    mapping = {
+            # Launching the application
+
+            '(your | John) install': Text('yarn install'),
+            '(your | John) add': Text('yarn add ')
         }
     extras = [
         Dictation("text"),
@@ -128,7 +150,9 @@ grammar = Grammar("terminal", context=terminal_context) # Create grammar
 grammar.add_rule(TerminalRule())  # Add the top-level rule.
 grammar.add_rule(GitRule())  # At the git rule
 grammar.add_rule(ApplicationRule())  # Add the top-level rule.
-grammar.add_rule(ShiftRule())  # Add the shift rule
+grammar.add_rule(ShiftRule())  # Add the shift rule.
+grammar.add_rule(NodeYarnRule())  # Add the NodeYarn rule.
+grammar.add_rule(terminator.TerminatorRule()) # Add the terminator rule
 grammar.load()  # Load the grammar.
 
 def unload():

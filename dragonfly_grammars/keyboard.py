@@ -95,7 +95,6 @@ modifierMap = {
 singleModifierMap = {
     "alt": "alt",
     "control": "ctrl",
-    "shift": "shift",
     "super": "win",
 }
 
@@ -115,7 +114,7 @@ letterMap = {
     "(mike) ": "m",
     "(november) ": "n",
     "(Oscar) ": "o",
-    "(papa) ": "p",
+    "(papa | Papa) ": "p",
     "(quebec) ": "q",
     "(romeo) ": "r",
     "(sierra) ": "s",
@@ -246,7 +245,7 @@ grammarCfg.cmd.map = Item(
         "dockets": Key("langle, space, slash, rangle, left:3/3"),
         "[square] brackets": Key("lbracket, rbracket, left/3"),
         "[curly] braces": Key("lbrace, rbrace, left/3"),
-        "(parens|parentheses|parasites)": Key("lparen, rparen, left/3"),
+        "(para)": Key("lparen, rparen, left/3"),
         "quotes": Key("dquote/3, dquote/3, left/3"),
         "backticks": Key("backtick:2, left"),
         "Quinn": Key("squote, squote, left/3"),
@@ -261,7 +260,7 @@ grammarCfg.cmd.map = Item(
         "colon [<n>]": Key("colon/2:%(n)d"),
         "semi-colon [<n>]": Key("semicolon/2:%(n)d"),
         "comma [<n>]": Key("comma/2:%(n)d"),
-        "(dot|period|dit|point)": Key("dot"),  # cannot be followed by a repeat count
+        "period": Key("dot"),  # cannot be followed by a repeat count
         "(dash|hyphen|minus) [<n>]": Key("hyphen/2:%(n)d"),
         "underscore [<n>]": Key("underscore/2:%(n)d"),
         "<letters>": Text("%(letters)s"),
@@ -277,8 +276,6 @@ grammarCfg.cmd.map = Item(
         '(ren|wren) [<n>]':   Key('rparen:%(n)d'),
 
         "act [<n>]": Key("escape:%(n)d"),
-        "calm [<n>]": Key("comma:%(n)d"),
-        'into': Key('space,bar,space'),
         'care':        Key('home'),
         '(doll|dole)': Key('end'),
         'chuck [<n>]':       Key('del:%(n)d'),
@@ -287,17 +284,19 @@ grammarCfg.cmd.map = Item(
         "visual line": Key("s-v"),
         "visual block": Key("c-v"),
         "doc save": Key("c-s"),
-        "arrow": Text("->"),
+        "arrow": Text(" => "),
 
         #### Lines
         'line down [<n>]': Key('home:2, shift:down, end:2, shift:up, c-x, del, down:%(n)d, home:2, enter, up, c-v'),
         'lineup [<n>]':    Key('home:2, shift:down, end:2, shift:up, c-x, del, up:%(n)d, home:2, enter, up, c-v'),
-        'nab [<n>]':       Key('home:2, shift:down, down:%(n)d, up, end:2, shift:up, c-c, end:2'),
-        'squishy [<n>]':   Key('end:2, del, space'),
+        'nab [<n>]':       Key('home:1, shift:down, down:%(n)d, up, end:2, shift:up, c-c, end:2'),
+        'squishy [<n>]':   Key('end:2, space') + Text('_') + Key('down, home, c-backspace'),
         'strip':           Key('s-end:2, del'),
-        'striss':          Key('s-home:2, del'),
-        'trance [<n>]':    Key('home:2, shift:down, down:%(n)d, up, end:2, shift:up, c-c, end:2, enter, c-v'),
+        'Chop':            Key('s-home:2, del'),
+        'trance [<n>]':    Key('home:1, shift:down, down:%(n)d, up, end:2, shift:up, c-c, end:1, enter, c-v'),
         'wipe [<n>]':      Key('home:2, shift:down, down:%(n)d, up, end:2, del, shift:up, backspace'),
+        # Go to row
+        'leap [<n>]':      Key('c-g') + Text('%(n)s') + Key('enter'),
 
         #### Words
         'bump [<n>]':      Key('cs-right:%(n)d, del'),
@@ -307,8 +306,7 @@ grammarCfg.cmd.map = Item(
         'drop [<n>]':  Key('pgdown:%(n)d'),
 
         'lope [<n>]':  Key('c-left:%(n)d'),
-        '(yope|rope) [<n>]':  Key('c-right:%(n)d'),
-        '(hill scratch|hatch) [<n>]': Key('c-backspace:%(n)d'),
+        'rope [<n>]':  Key('c-right:%(n)d'),
 
         'hexadecimal': Text("0x"),
         'suspend': Key('c-z'),

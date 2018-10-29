@@ -4,6 +4,17 @@ from aenea import *
 
 class ProgramsRule(MappingRule):
     mapping = {
+    ## Common shortcuts in sublime
+
+    # Search in this file
+    'hunt': Key('c-f'),
+    # Replace in file
+    'swap': Key('c-h'),
+    # Search in all files
+    'hunting': Key('cs-f'),
+    # Search everywhere
+    'fuzzy': Key('c-p'),
+
     ## Application management keys
 
     # Pan the current window left
@@ -22,11 +33,15 @@ class ProgramsRule(MappingRule):
     ## Specific applications
     'termite': Key('w-1'),
     'Chronicle': Key('w-2'),
-    'arsenic': Key('w-3'),
+    'cracking': Key('w-3'),
     'slacker': Key('w-4'),
-    'rubles': Key('w-5'),
+    'sublime': Key('w-5'),
     'music': Key('w-6'),
     'insomnia': Key('w-7'),
+    'station': Key('w-8'),
+
+    ## Commonly used
+    'Navy': Text('cd '),
 
     }
     extras = [

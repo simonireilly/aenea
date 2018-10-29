@@ -12,12 +12,10 @@ class AtomRule(MappingRule):
     mapping = {
             ## Global commands
 
+            # Global search
+            'Editor settings': Key('cs-p'),
             # Auto-indent
             'indent': Key('cs-i'),
-            # Search in this file
-            'hunt': Key('c-f'),
-            # Search in all files
-            'hunting': Key('cs-f'),
             # Select  an instance
             'select instance': Key('c-d'),
             # Select all instances
