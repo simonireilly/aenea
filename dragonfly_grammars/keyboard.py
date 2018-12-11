@@ -77,6 +77,7 @@ specialCharMap = {
     "equal": "=",
     "plus": "+",
     "space": " ",
+    "tilde": "~",
 
     "bang": "!",
     "question": "?",
@@ -291,8 +292,8 @@ grammarCfg.cmd.map = Item(
         'lineup [<n>]':    Key('home:2, shift:down, end:2, shift:up, c-x, del, up:%(n)d, home:2, enter, up, c-v'),
         'nab [<n>]':       Key('home:1, shift:down, down:%(n)d, up, end:2, shift:up, c-c, end:2'),
         'squishy [<n>]':   Key('end:2, space') + Text('_') + Key('down, home, c-backspace'),
-        'strip':           Key('s-end:2, del'),
-        'Chop':            Key('s-home:2, del'),
+        'bumper':           Key('s-end:2, del'),
+        'wacky':            Key('s-home:2, del'),
         'trance [<n>]':    Key('home:1, shift:down, down:%(n)d, up, end:2, shift:up, c-c, end:1, enter, c-v'),
         'wipe [<n>]':      Key('home:2, shift:down, down:%(n)d, up, end:2, del, shift:up, backspace'),
         # Go to row

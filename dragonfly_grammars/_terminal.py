@@ -147,12 +147,42 @@ class NodeYarnRule(MappingRule):
         "n": 1,
     }
 
+
+phoenixcommand = {
+    "new": ".new",
+    "server": ".server",
+    "Jane context": ".gen.context",
+    "Jane html": ".gen.html",
+}
+
+class ElixirRule(MappingRule):
+    mapping = {
+            ## Commands
+            'eggs': Text("elixir "),
+            'mix': Text("mix "),
+            'ecto': Text("ecto"),
+            'Ickes': Text("iex "),
+            'phoenix <phoenixcommand>': Text("phx%(phoenixcommand)s"),
+            ## File affixes
+            'ex file': Text('.ex'),
+            'ex script': Text('.exs'),
+        }
+    extras = [
+        Dictation("text"),
+        IntegerRef("n", 1, 100),
+        Choice('phoenixcommand', phoenixcommand)
+    ]
+    defaults = {
+        "n": 1,
+    }
+
 grammar = Grammar("terminal", context=terminal_context) # Create grammar
 grammar.add_rule(TerminalRule())  # Add the top-level rule.
 grammar.add_rule(GitRule())  # At the git rule
 grammar.add_rule(ApplicationRule())  # Add the top-level rule.
 grammar.add_rule(ShiftRule())  # Add the shift rule.
 grammar.add_rule(NodeYarnRule())  # Add the NodeYarn rule.
+grammar.add_rule(ElixirRule())  # Add the NodeYarn rule.
 grammar.add_rule(terminator.TerminatorRule()) # Add the terminator rule
 grammar.load()  # Load the grammar.
 

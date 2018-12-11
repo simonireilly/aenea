@@ -13,6 +13,7 @@ javascript_syntax = {
 general_syntax = {
     # A smart equals command
     'quail': Text(' = '),
+    'Finn': Text('end'),
 }
 
 html_syntax = {
