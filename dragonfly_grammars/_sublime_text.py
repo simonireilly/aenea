@@ -60,7 +60,7 @@ class SublimeTextRule(MappingRule):
             # Reduce selection
             # 'duff [<n>]': Key('a-down:%(n)d'),
             # Toggle comment
-            'note': Key('c-slash'),
+            'note [<text>]': Key('c-slash') + Text('%(text)s'),
 
             ## Navigation
 

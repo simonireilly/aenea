@@ -94,6 +94,7 @@ class ApplicationRule(MappingRule):
             'post': Text('psql '),
             'really': Text('rails '),
             'doctor': Text('docker '),
+            'doctor compose': Text('docker-compose '),
             'subtle': Text('subl .') + Key('enter'),
             # Rails commands
             'bundle install': Text('bundle install'),

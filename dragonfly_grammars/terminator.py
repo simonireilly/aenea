@@ -5,8 +5,8 @@ from aenea import *
 class TerminatorRule(MappingRule):
     mapping = {
             ## Managing terminator windows.
-            'tall': Key('cs-e'),
             'short': Key('cs-o'),
+            'tall': Key('cs-e'),
             ## Navigating terminal windows
             'jump': Key('a-up'),
             'fall': Key('a-down'),
