@@ -5,7 +5,7 @@ from aenea import *
 import terminator
 
 terminal_context = aenea.wrappers.AeneaContext(
-    ProxyAppContext(match='regex', title='(?i).*simon@simon.*'), # app_id='Terminal'
+    ProxyAppContext(match='regex', title='(?i).*/bin/bash.*'), # app_id='Terminal'
     AppContext(executable='Terminal')
     )
 
@@ -118,7 +118,7 @@ class ShiftRule(MappingRule):
             'shifty yawn': Text('./bin/dev/yarn '),
             'shifty post': Text('psql -p 5432 -h localhost -U postgres'),
             'shifty console': Text('./bin/dev/console') + Key('enter'),
-            'shifty test': Text('./bin/dev/test '),
+            'shifty test': Text('./bin/dev/rspec '),
             'shifty rails': Text('./bin/dev/rails '),
             'shifty bundle': Text('./bin/dev/bundle '),
             'shifty break': Text('./bin/dev/rake '),
@@ -163,7 +163,7 @@ mixedcommand = {
 class ElixirRule(MappingRule):
     mapping = {
             ## Commands
-            'eggs': Text("elixir "),
+            'licks': Text("elixir "),
             'mix <mixedcommand>': Text("mix %(mixedcommand)s"),
             'ecto': Text("ecto"),
             'Ickes': Text("iex "),

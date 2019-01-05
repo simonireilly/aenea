@@ -11,9 +11,9 @@ javascript_syntax = {
 }
 
 general_syntax = {
-    # A smart equals command
     'quail': Text(' = '),
     'Finn': Text('end'),
+    'wriggle': Key('right') + Text(', '),
     'if': Text('if'),
 }
 
