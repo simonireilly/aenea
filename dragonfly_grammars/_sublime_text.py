@@ -13,16 +13,10 @@ class SublimeTextRule(MappingRule):
 
             ## Editing
 
-            # Cut the entire line
-            # '' : Key('c-x'),
             # Break to a new line down
             'bake': Key('c-enter'),
             # Break to a new line up
             'shake': Key('cs-enter'),
-            # Ctrl + shift + up    Move line/selection up
-            # Ctrl + shift + down    Move line/selection down
-            # Select multiple lines
-            # Ctrl + L    Select line - Repeat to select next lines
             # Select  an instance
             'select instance': Key('c-d'),
             # Select all instances
@@ -31,7 +25,8 @@ class SublimeTextRule(MappingRule):
             'block': Key('c-m'),
             # Select everything in bracket
             'blocked': Key('cs-m'),
-
+            # Adjoining lines
+            'join [<n>]': Key('c-j:%(n)d'),
 
             ## Global commands
 
@@ -43,10 +38,6 @@ class SublimeTextRule(MappingRule):
             'peak': Key('cs-a'),
             # Toggle the tree
             'timber': Key('ctrl:down, k, b, ctrl:up'),
-            # Copy project path
-            # 'project path': Key('csa-c'),
-            # Toggle git
-            # 'staging': Key('cs-9'),
 
             ## File commands
 
@@ -64,11 +55,11 @@ class SublimeTextRule(MappingRule):
 
             ## Navigation
 
-            'find file': Key('c-p'),
+            'find file [<text>]': Key('c-p') + Text('%(text)s'),
             # Find a file
-            'find word': Key('c-semicolon'),
+            'find word [<text>]': Key('c-semicolon') + Text('%(text)s'),
             # Find definition
-            'find definition': Key('c-r'),
+            'find definition [<text>]': Key('c-r') + Text('%(text)s'),
             # Close file
             'close file': Key('c-w'),
             # # Go to row
@@ -76,9 +67,11 @@ class SublimeTextRule(MappingRule):
 
             ## Manage windows
 
+            # Switching between tabs
+            'Tony [<n>]': Key('a-%(n)d'),
             # Set up the windows
             'arrange [<n>]': Key('as-%(n)d'),
-            # Set up the windows
+            # View this window number
             'view [<n>]': Key('c-%(n)d'),
             # Set up the windows
             'send [<n>]': Key('cs-%(n)d'),

@@ -15,6 +15,7 @@ general_syntax = {
     'Finn': Text('end'),
     'wriggle': Key('right') + Text(', '),
     'if': Text('if'),
+    'Key [<text>] value [<text_2>]': Text('%(text)s: "%(text_2)s"'),
 }
 
 html_syntax = {
@@ -25,6 +26,7 @@ class ProgrammingRule(MappingRule):
     mapping = dict(general_syntax.items() + html_syntax.items() + javascript_syntax.items() )
     extras = [
     Dictation("text"),
+    Dictation("text_2"),
     IntegerRef("n", 1, 100),
     ]
     defaults = {
