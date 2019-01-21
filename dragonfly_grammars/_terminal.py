@@ -132,16 +132,20 @@ class ShiftRule(MappingRule):
         "n": 1,
     }
 
-class NodeYarnRule(MappingRule):
-    mapping = {
-            # Launching the application
+npmcommand = {
+    "start": "start",
+    "test": "test",
+    "install": "install",
+}
 
-            '(your | John) install': Text('yarn install'),
-            '(your | John) add': Text('yarn add ')
+class NodeRule(MappingRule):
+    mapping = {
+            'npm <npmcommand>': Text('npm %(npmcommand)s'),
         }
     extras = [
         Dictation("text"),
         IntegerRef("n", 1, 100),
+        Choice('npmcommand', npmcommand)
     ]
     defaults = {
         "n": 1,
@@ -158,6 +162,13 @@ phoenixcommand = {
 mixedcommand = {
     "depth get": "deps.get",
     "ecto setup": "ecto.setup",
+    "compile": "compile",
+    "new": "new",
+    "test": "test",
+}
+
+iexcommand = {
+    "mix": "-S mix",
 }
 
 class ElixirRule(MappingRule):
@@ -166,7 +177,7 @@ class ElixirRule(MappingRule):
             'licks': Text("elixir "),
             'mix <mixedcommand>': Text("mix %(mixedcommand)s"),
             'ecto': Text("ecto"),
-            'Ickes': Text("iex "),
+            'Ickes <iexcommand>': Text("iex %(iexcommand)s"),
             'phoenix <phoenixcommand>': Text("phx%(phoenixcommand)s"),
             ## File affixes
             'ex file': Text('.ex'),
@@ -177,6 +188,7 @@ class ElixirRule(MappingRule):
         IntegerRef("n", 1, 100),
         Choice('phoenixcommand', phoenixcommand),
         Choice('mixedcommand', mixedcommand),
+        Choice('iexcommand', iexcommand),
     ]
     defaults = {
         "n": 1,
@@ -187,7 +199,7 @@ grammar.add_rule(TerminalRule())  # Add the top-level rule.
 grammar.add_rule(GitRule())  # At the git rule
 grammar.add_rule(ApplicationRule())  # Add the top-level rule.
 grammar.add_rule(ShiftRule())  # Add the shift rule.
-grammar.add_rule(NodeYarnRule())  # Add the NodeYarn rule.
+grammar.add_rule(NodeRule())  # Add the NodeYarn rule.
 grammar.add_rule(ElixirRule())  # Add the NodeYarn rule.
 grammar.add_rule(terminator.TerminatorRule()) # Add the terminator rule
 grammar.load()  # Load the grammar.
