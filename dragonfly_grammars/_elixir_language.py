@@ -17,21 +17,26 @@ elixircommand = {
     "into": ".into",
     "each": ".each",
     "trim": ".trim",
+    "map": ".map",
     "downcase": ".downcase",
     "upcase": ".upcase",
+    "reverse": ".reverse",
+    "await": ".await",
+    "async": ".async",
 }
 
 class ElixirRule(MappingRule):
     mapping = {
 
             ## Definitions
-            'death': Key('d,e,f'),
-            'death mod': Key('d,e,f,m,o,d,enter'),
+            'define': Text('def') + Pause("20") + Key('tab'),
+            'define module': Text('defmo') + Pause("20") + Key('tab'),
 
             ## Compound commands
             'I oh <elixircommand>': Text("IO%(elixircommand)s"),
             'Enum <elixircommand>': Text("Enum%(elixircommand)s"),
             'String <elixircommand>': Text("String%(elixircommand)s"),
+            'Task <elixircommand>': Text("Task%(elixircommand)s"),
 
             ## Common commands
             'change set': Text('changeset'),

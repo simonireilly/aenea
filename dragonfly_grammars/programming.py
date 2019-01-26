@@ -22,8 +22,15 @@ html_syntax = {
     'Dave': Text('div'),
 }
 
+file_extensions = {
+    'yaml file': Text('.yml'),
+    'Jayson file': Text('.json'),
+    'embedded ruby file': Text('.erb'),
+    'ruby file': Text('.rb'),
+}
+
 class ProgrammingRule(MappingRule):
-    mapping = dict(general_syntax.items() + html_syntax.items() + javascript_syntax.items() )
+    mapping = dict(general_syntax.items() + html_syntax.items() + javascript_syntax.items() + file_extensions.items() )
     extras = [
     Dictation("text"),
     Dictation("text_2"),

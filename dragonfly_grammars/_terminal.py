@@ -5,7 +5,7 @@ from aenea import *
 import terminator
 
 terminal_context = aenea.wrappers.AeneaContext(
-    ProxyAppContext(match='regex', title='(?i).*/bin/bash.*'), # app_id='Terminal'
+    ProxyAppContext(match='regex', title='(?i).*simon@simon.*'), # app_id='Terminal'
     AppContext(executable='Terminal')
     )
 
