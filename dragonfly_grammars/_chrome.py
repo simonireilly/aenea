@@ -9,7 +9,7 @@ chrome_context = aenea.wrappers.AeneaContext(
 
 class ChromeRule(MappingRule):
     mapping = {
-        'developer tools': Key('cs-i'),
+        'inspect': Key('cs-i'),
         'address bar': Key('a-d'),
         'refresh page': Key('f5'),
         'really refresh page': Key('s-f5'),
