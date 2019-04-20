@@ -7,7 +7,9 @@ javascript_syntax = {
     'const ': Text('const '),
     'let ': Text('let '),
     # Easy console logging
-    'console log [<text>]': Text('console.log(%(text)s)')
+    'console log [<text>]': Text('console.log(%(text)s)'),
+    # Easy ES6 importing
+    'import [<text>] from [<text_2>]': Text('import %(text)s from "%(text_2)s"')
 }
 
 general_syntax = {

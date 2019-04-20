@@ -136,6 +136,9 @@ npmcommand = {
     "start": "start",
     "test": "test",
     "install": "install",
+    "run demo": "run demo",
+    "run test services": "run test-services",
+    "run test integration": "run test-integration",
 }
 
 class NodeRule(MappingRule):
@@ -165,6 +168,11 @@ mixedcommand = {
     "compile": "compile",
     "new": "new",
     "test": "test",
+    "local hex": "local.hex",
+    "archive install": "archive.install",
+    "phoenix new": "phx.new",
+    "phoenix server": "phx.server",
+    "ecto create": "ecto.create"
 }
 
 iexcommand = {
@@ -175,7 +183,7 @@ class ElixirRule(MappingRule):
     mapping = {
             ## Commands
             'licks': Text("elixir "),
-            'mix <mixedcommand>': Text("mix %(mixedcommand)s"),
+            'mix <mixedcommand> [<text>]': Text("mix %(mixedcommand)s %(text)s"),
             'ecto': Text("ecto"),
             'Ickes <iexcommand>': Text("iex %(iexcommand)s"),
             'phoenix <phoenixcommand>': Text("phx%(phoenixcommand)s"),
@@ -192,6 +200,7 @@ class ElixirRule(MappingRule):
     ]
     defaults = {
         "n": 1,
+        "text": "",
     }
 
 grammar = Grammar("terminal", context=terminal_context) # Create grammar
