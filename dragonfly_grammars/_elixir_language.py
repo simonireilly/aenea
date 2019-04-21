@@ -29,7 +29,7 @@ class ElixirRule(MappingRule):
     mapping = {
 
             ## Definitions
-            'define': Text('def') + Pause("20") + Key('tab'),
+            'define function': Text('def') + Pause("20") + Key('tab'),
             'define module': Text('defmo') + Pause("20") + Key('tab'),
 
             ## Compound commands

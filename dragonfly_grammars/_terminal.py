@@ -21,6 +21,7 @@ class TerminalRule(MappingRule):
             'folders': Text('ls') + Key('enter'),
             # Add a folder
             'Add folder': Text('mkdir '),
+            'touch': Text('touch '),
             'navigate': Text('cd '),
             'historian': Key('c-r'),
             # Managing terminal windows.

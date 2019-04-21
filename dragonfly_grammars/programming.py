@@ -29,6 +29,8 @@ file_extensions = {
     'Jayson file': Text('.json'),
     'embedded ruby file': Text('.erb'),
     'ruby file': Text('.rb'),
+    'elixir file': Text('.ex'),
+    'embedded elixir file': Text('.eex'),
 }
 
 class ProgrammingRule(MappingRule):

@@ -42,11 +42,12 @@ class ProgramsRule(MappingRule):
 
     ## Commonly used
     'Navy': Text('cd '),
+    'localhost <n>': Text('localhost:%(n)d')
 
     }
     extras = [
     Dictation("text"),
-    IntegerRef("n", 1, 100),
+    IntegerRef("n", 1, 9999),
     ]
     defaults = {
     "n": 1,
