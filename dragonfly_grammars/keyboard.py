@@ -209,7 +209,6 @@ grammarCfg.cmd.map = Item(
         "page up [<n>]": Key("pgup:%(n)d"),
         "page down [<n>]": Key("pgdown:%(n)d"),
         "home": Key("home"),
-        "end": Key("end"),
         "doc home": Key("c-home/3"),
         "doc end": Key("c-end/3"),
 
