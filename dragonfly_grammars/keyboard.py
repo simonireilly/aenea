@@ -78,7 +78,6 @@ specialCharMap = {
     "plus": "+",
     "space": " ",
     "tilde": "~",
-
     "bang": "!",
     "question": "?",
     "caret": "^",

@@ -17,7 +17,6 @@ general_syntax = {
     'Finn': Text('end'),
     'wriggle': Key('right') + Text(', '),
     'if': Text('if'),
-    'Key [<text>] value [<text_2>]': Text('%(text)s: "%(text_2)s"'),
 }
 
 html_syntax = {
