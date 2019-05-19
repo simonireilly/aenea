@@ -9,7 +9,7 @@ elixir_context = aenea.wrappers.AeneaContext(
 
 elixircommand = {
     "gets": ".gets",
-    "puts": ".puts",
+    "puts": ".puts ",
     "inspect": ".inspect",
     "reduce": ".reduce",
     "count": ".count",
@@ -29,7 +29,7 @@ class ElixirRule(MappingRule):
     mapping = {
 
             ## Definitions
-            'define function': Text('def') + Pause("20") + Key('tab'),
+            'define function [<text>]': Text('def') + Pause("20") + Key('tab') + Text('%(text)s'),
             'define module': Text('defmo') + Pause("20") + Key('tab'),
 
             ## Compound commands
@@ -46,6 +46,7 @@ class ElixirRule(MappingRule):
             'dagger': Text('|> '),
             'blade': Text(' -> '),
             'sigal': Text('~s'),
+            'default': Text(' \\\\ '),
         }
     extras = [
         Dictation("text"),
@@ -54,6 +55,7 @@ class ElixirRule(MappingRule):
     ]
     defaults = {
         "n": 1,
+        "text": "",
     }
 
 grammar = Grammar("Elixir", context=elixir_context) # Create grammar
