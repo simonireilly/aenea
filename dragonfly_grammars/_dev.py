@@ -11,6 +11,9 @@ dev_context = aenea.wrappers.AeneaContext(
 
 command = {
     'start': 'up',
+    'console': 'console',
+    'tail': 'tail',
+    'test': 'test',
     'stop': 'stop',
     'restart': 'restart',
     'kill': 'down',
@@ -23,6 +26,8 @@ project = {
     'platform': 'platform',
     'gift-cards': 'gift-cards',
     'oms': 'oms',
+    'dev': 'dev',
+    'webhook-dispatcher': 'webhook-dispatcher',
 }
 
 args = {
@@ -34,9 +39,13 @@ class DevRule(MappingRule):
     mapping = {
         # Git
         "dev directory": Text("cd ~/work/shift-dev") + Key("enter"),
-        "make <command>": Text("make %(command)s") + Key("enter"),
-        "make <project> <command>": Text("make %(project)s-%(command)s") + Key("enter"),
-        "make <project> <command> <args>": Text("make %(project)s-%(command)s args='%(args)s'") + Key("enter"),
+        "voice directory": Text("cd ~/aenea") + Key("enter"),
+        "<command>": Text("%(command)s"),
+        "<project> <command>": Text("%(project)s-%(command)s"),
+        "<project> <command> <args>": Text("%(project)s-%(command)s args='%(args)s'"),
+        "make <command>": Text("make %(command)s"),
+        "make <project> <command>": Text("make %(project)s-%(command)s"),
+        "make <project> <command> <args>": Text("make %(project)s-%(command)s args='%(args)s'"),
     }
     extras = [
         Dictation("text"),

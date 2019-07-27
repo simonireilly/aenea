@@ -13,6 +13,7 @@ class RubyRule(MappingRule):
 
             'Yardie': Text("# -> Add a documentation \n# \n# @param \n# @return \n"),
             'death': Key("d, e, f, tab"),
+            'it <text>': Text("it \"%(text)s\" do \n \n end")
         }
     extras = [
         Dictation("text"),
