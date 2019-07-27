@@ -1,15 +1,17 @@
 # Dragonfly module for controlling the Linux terminal
 # The context of this file will be strictly for terminal use
 
-import sys
-sys.path.append('./terminal')
-
 from aenea import *
 
-import terminator
-import buffalo
-import dev
-import git
+import cli_application
+import cli_buffalo
+import cli_dev
+import cli_elixir
+import cli_git
+import cli_heroku
+import cli_node
+import cli_shift
+import cli_terminator
 
 terminal_context = aenea.wrappers.AeneaContext(
     ProxyAppContext(match='regex', title='(?i).*simon@simon.*'), # app_id='Terminal'
@@ -57,133 +59,23 @@ class TerminalRule(MappingRule):
         "n": 1,
     }
 
-class ShiftRule(MappingRule):
-    mapping = {
-            # Launching the application
+grammar = Grammar("terminal", context=terminal_context)
 
-            'shifty boot': Text('./bin/dev/boot') + Key('enter'),
-            'shifty yawn': Text('./bin/dev/yarn '),
-            'shifty post': Text('psql -p 5432 -h localhost -U postgres'),
-            'shifty console': Text('./bin/dev/console') + Key('enter'),
-            'shifty test': Text('./bin/dev/rspec '),
-            'shifty rails': Text('./bin/dev/rails '),
-            'shifty bundle': Text('./bin/dev/bundle '),
-            'shifty break': Text('./bin/dev/rake '),
-            'consultant (<text>)': Text("Tenant.switch('%(text)s') {binding.pry}")
-        }
-    extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
-    ]
-    defaults = {
-        "n": 1,
-    }
+# Command line interfaces
+grammar.add_rule(cli_application.ApplicationRule())
+grammar.add_rule(cli_buffalo.BuffaloRule())
+grammar.add_rule(cli_dev.DevRule())
+grammar.add_rule(cli_elixir.ElixirRule())
+grammar.add_rule(cli_git.GitRule())
+grammar.add_rule(cli_heroku.HerokuRule())
+grammar.add_rule(cli_node.NodeRule())
+grammar.add_rule(cli_shift.ShiftRule())
+grammar.add_rule(cli_terminator.TerminatorRule())
 
+# Master rule
+grammar.add_rule(TerminalRule())
 
-class ApplicationRule(MappingRule):
-    mapping = {
-            # Basic root applications.
-            'post': Text('psql '),
-            'really': Text('rails '),
-            'doctor': Text('docker '),
-            'doctor compose': Text('docker-compose '),
-            'subtle': Text('subl .') + Key('enter'),
-            # Rails commands
-            'bundle install': Text('bundle install'),
-            'bundle update': Text('bundle update'),
-            'bundle exec': Text('bundle exec '),
-            'really my':  Text('rails db:migrate'),
-        }
-    extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
-    ]
-    defaults = {
-        "n": 1,
-    }
-
-npmcommand = {
-    "start": "start",
-    "test": "test",
-    "install": "install",
-    "run demo": "run demo",
-    "run test services": "run test-services",
-    "run test integration": "run test-integration",
-}
-
-class NodeRule(MappingRule):
-    mapping = {
-            'npm <npmcommand>': Text('npm %(npmcommand)s'),
-        }
-    extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
-        Choice('npmcommand', npmcommand)
-    ]
-    defaults = {
-        "n": 1,
-    }
-
-
-phoenixcommand = {
-    "new": ".new",
-    "server": ".server",
-    "Jane context": ".gen.context",
-    "Jane html": ".gen.html",
-}
-
-mixedcommand = {
-    "depth get": "deps.get",
-    "ecto setup": "ecto.setup",
-    "compile": "compile",
-    "new": "new",
-    "test": "test",
-    "local hex": "local.hex",
-    "archive install": "archive.install",
-    "phoenix new": "phx.new",
-    "phoenix server": "phx.server",
-    "ecto create": "ecto.create"
-}
-
-iexcommand = {
-    "mix": "-S mix",
-}
-
-class ElixirRule(MappingRule):
-    mapping = {
-            ## Commands
-            'licks': Text("elixir "),
-            'mix <mixedcommand> [<text>]': Text("mix %(mixedcommand)s %(text)s"),
-            'ecto': Text("ecto"),
-            'Ickes <iexcommand>': Text("iex %(iexcommand)s"),
-            'phoenix <phoenixcommand>': Text("phx%(phoenixcommand)s"),
-            ## File affixes
-            'ex file': Text('.ex'),
-            'ex script': Text('.exs'),
-        }
-    extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
-        Choice('phoenixcommand', phoenixcommand),
-        Choice('mixedcommand', mixedcommand),
-        Choice('iexcommand', iexcommand),
-    ]
-    defaults = {
-        "n": 1,
-        "text": "",
-    }
-
-grammar = Grammar("terminal", context=terminal_context) # Create grammar
-grammar.add_rule(TerminalRule())  # Add the top-level rule.
-grammar.add_rule(ApplicationRule())  # Add the top-level rule.
-grammar.add_rule(ShiftRule())  # Add the shift rule.
-grammar.add_rule(NodeRule())  # Add the NodeYarn rule.
-grammar.add_rule(ElixirRule())  # Add the NodeYarn rule.
-grammar.add_rule(terminator.TerminatorRule()) # Add the terminator rule
-grammar.add_rule(buffalo.BuffaloRule()) # Add the terminator rule
-grammar.add_rule(dev.DevRule())  # Add the top-level rule.
-grammar.add_rule(git.GitRule())  # Add the top-level rule.
-grammar.load()  # Load the grammar.
+grammar.load()
 
 def unload():
     """Unload function which will be called at unload time."""

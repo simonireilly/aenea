@@ -2,7 +2,7 @@
 
 from aenea import *
 
-class ApplicationsRule(MappingRule):
+class ApplicationRule(MappingRule):
     mapping = {
             # Basic root applications.
             'post': Text('psql '),
