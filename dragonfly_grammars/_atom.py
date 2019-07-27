@@ -1,6 +1,7 @@
 # This is a dragonfly module for atom
 
 from aenea import *
+from markdown import MarkdownRule
 
 atom_context = aenea.wrappers.AeneaContext(
     ProxyAppContext(match='regex', title='(?i).*Atom.*'),
@@ -11,20 +12,24 @@ class AtomRule(MappingRule):
     mapping = {
             ## Global commands
 
-            # Search in this file
-            'hunt': Key('c-f'),
-            # Search in all files
-            'hunting': Key('cs-f'),
+            # Global search
+            'Editor settings': Key('cs-p'),
+            # Auto-indent
+            'indent': Key('cs-i'),
             # Select  an instance
             'select instance': Key('c-d'),
             # Select all instances
             'select instances': Key('a-f3'),
             # Select specific tab
-            'lethal [<n>]': Key('a-%(n)d'),
+            'Tony [<n>]': Key('a-%(n)d'),
             # Show the file
             'peak': Key('cs-a'),
+            # Toggle the tree
+            'timber': Key('csa-a'),
+            # Copy project path
+            'project path': Key('csa-c'),
             # Toggle git
-            'staging': Key('c-9'),
+            'staging': Key('cs-9'),
 
             ## File commands
 
@@ -39,11 +44,13 @@ class AtomRule(MappingRule):
             # Go to row
             'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
             # Expand selection
-            'puff': Key('a-up'),
+            'puff [<n>]': Key('a-up:%(n)d'),
             # Reduce selection
-            'duff': Key('a-down'),
+            'duff [<n>]': Key('a-down:%(n)d'),
             # Toggle comment
             'note': Key('c-slash'),
+
+
         }
     extras = [
         Dictation("text"),
@@ -55,6 +62,7 @@ class AtomRule(MappingRule):
 
 grammar = Grammar("Atom", context=atom_context) # Create grammar
 grammar.add_rule(AtomRule()) # Add the rule
+grammar.add_rule(MarkdownRule()) # Add the rule
 grammar.load()  # Load the grammar.
 
 def unload():
