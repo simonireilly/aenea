@@ -1,6 +1,9 @@
 # Dragonfly module for controlling the Linux terminal
 # The context of this file will be strictly for terminal use
 
+import sys
+sys.path.append('./terminal')
+
 from aenea import *
 
 import terminator
@@ -54,28 +57,6 @@ class TerminalRule(MappingRule):
         "n": 1,
     }
 
-class ApplicationRule(MappingRule):
-    mapping = {
-            # Basic root applications.
-            'post': Text('psql '),
-            'really': Text('rails '),
-            'doctor': Text('docker '),
-            'doctor compose': Text('docker-compose '),
-            'subtle': Text('subl .') + Key('enter'),
-            # Rails commands
-            'bundle install': Text('bundle install'),
-            'bundle update': Text('bundle update'),
-            'bundle exec': Text('bundle exec '),
-            'really my':  Text('rails db:migrate'),
-        }
-    extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
-    ]
-    defaults = {
-        "n": 1,
-    }
-
 class ShiftRule(MappingRule):
     mapping = {
             # Launching the application
@@ -89,6 +70,29 @@ class ShiftRule(MappingRule):
             'shifty bundle': Text('./bin/dev/bundle '),
             'shifty break': Text('./bin/dev/rake '),
             'consultant (<text>)': Text("Tenant.switch('%(text)s') {binding.pry}")
+        }
+    extras = [
+        Dictation("text"),
+        IntegerRef("n", 1, 100),
+    ]
+    defaults = {
+        "n": 1,
+    }
+
+
+class ApplicationRule(MappingRule):
+    mapping = {
+            # Basic root applications.
+            'post': Text('psql '),
+            'really': Text('rails '),
+            'doctor': Text('docker '),
+            'doctor compose': Text('docker-compose '),
+            'subtle': Text('subl .') + Key('enter'),
+            # Rails commands
+            'bundle install': Text('bundle install'),
+            'bundle update': Text('bundle update'),
+            'bundle exec': Text('bundle exec '),
+            'really my':  Text('rails db:migrate'),
         }
     extras = [
         Dictation("text"),
