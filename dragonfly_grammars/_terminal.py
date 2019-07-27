@@ -2,7 +2,11 @@
 # The context of this file will be strictly for terminal use
 
 from aenea import *
+
 import terminator
+import buffalo
+import dev
+import git
 
 terminal_context = aenea.wrappers.AeneaContext(
     ProxyAppContext(match='regex', title='(?i).*simon@simon.*'), # app_id='Terminal'
@@ -45,45 +49,6 @@ class TerminalRule(MappingRule):
     extras = [
         Dictation("text"),
         IntegerRef("n", 1, 100),
-    ]
-    defaults = {
-        "n": 1,
-    }
-
-gitcommand_array = [
-    'add',
-    'branch',
-    'checkout',
-    'clone',
-    'commit',
-    'diff',
-    'fetch',
-    'init',
-    'log',
-    'merge',
-    'pull',
-    'push',
-    'rebase',
-    'reset',
-    'show',
-    'stash',
-    'status',
-    'tag',
-]
-gitcommand = {}
-for command in gitcommand_array:
-    gitcommand[command] = command
-
-class GitRule(MappingRule):
-    mapping = {
-        # Git
-        "(git|get)": Text("git "),
-        "(git|get) <gitcommand>": Text("git %(gitcommand)s "),
-    }
-    extras = [
-        Dictation("text"),
-        IntegerRef("n", 1, 100),
-        Choice('gitcommand', gitcommand),
     ]
     defaults = {
         "n": 1,
@@ -206,12 +171,14 @@ class ElixirRule(MappingRule):
 
 grammar = Grammar("terminal", context=terminal_context) # Create grammar
 grammar.add_rule(TerminalRule())  # Add the top-level rule.
-grammar.add_rule(GitRule())  # At the git rule
 grammar.add_rule(ApplicationRule())  # Add the top-level rule.
 grammar.add_rule(ShiftRule())  # Add the shift rule.
 grammar.add_rule(NodeRule())  # Add the NodeYarn rule.
 grammar.add_rule(ElixirRule())  # Add the NodeYarn rule.
 grammar.add_rule(terminator.TerminatorRule()) # Add the terminator rule
+grammar.add_rule(buffalo.BuffaloRule()) # Add the terminator rule
+grammar.add_rule(dev.DevRule())  # Add the top-level rule.
+grammar.add_rule(git.GitRule())  # Add the top-level rule.
 grammar.load()  # Load the grammar.
 
 def unload():

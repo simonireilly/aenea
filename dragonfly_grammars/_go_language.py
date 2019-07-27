@@ -8,11 +8,12 @@ go_context = aenea.wrappers.AeneaContext(
     )
 
 gocommand = {
-    'print': 'Println'
+    'print': 'Println('
 }
 
 vartype = {
-    'string': 'string = "'
+    'string': 'string = "',
+    'integer': 'int',
 }
 
 class GoRule(MappingRule):
@@ -27,7 +28,7 @@ class GoRule(MappingRule):
 
             ## Compound commands
             'variable <text> <vartype>': Text('var %(text)s %(vartype)s'),
-            'format <gocommand>': Text('fmt.%(gocommand)s')
+            'format <gocommand> <text>': Text('fmt.%(gocommand)s%(text)s')
         }
     extras = [
         Dictation("text"),
@@ -39,6 +40,7 @@ class GoRule(MappingRule):
     defaults = {
         "n": 1,
         "text": "",
+        "text_2": "",
     }
 
 grammar = Grammar("Go", context=go_context) # Create grammar
