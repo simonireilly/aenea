@@ -30,6 +30,7 @@ file_extensions = {
     'ruby file': Text('.rb'),
     'elixir file': Text('.ex'),
     'embedded elixir file': Text('.eex'),
+    'go file': Text('.go'),
 }
 
 class ProgrammingRule(MappingRule):

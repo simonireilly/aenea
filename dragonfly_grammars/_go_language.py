@@ -8,7 +8,14 @@ go_context = aenea.wrappers.AeneaContext(
     )
 
 gocommand = {
-    'print': 'Println('
+    'print': 'Println("',
+    'Sprint': 'Sprintf("',
+    'format print': 'Printf("',
+    'fatal': 'Fatal(',
+}
+
+types = {
+    'bite': '[]byte'
 }
 
 vartype = {
@@ -20,6 +27,7 @@ class GoRule(MappingRule):
     mapping = {
 
             ## Definitions
+            'assign <text>': Text("%(text)s := "),
 
             ## Interpolated commands
             'package <text>': Text("package %(text)s"),
@@ -28,7 +36,8 @@ class GoRule(MappingRule):
 
             ## Compound commands
             'variable <text> <vartype>': Text('var %(text)s %(vartype)s'),
-            'format <gocommand> <text>': Text('fmt.%(gocommand)s%(text)s')
+            'format <gocommand> <text>': Text('fmt.%(gocommand)s%(text)s'),
+            'log <gocommand> <text>': Text('log.%(gocommand)s%(text)s'),
         }
     extras = [
         Dictation("text"),
