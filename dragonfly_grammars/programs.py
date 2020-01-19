@@ -35,13 +35,15 @@ class ProgramsRule(MappingRule):
     'Chronicle': Key('w-2'),
     'cracking': Key('w-3'),
     'slacker': Key('w-4'),
-    'sublime': Key('w-5'),
+    'editor': Key('w-5'),
     'music': Key('w-6'),
-    'insomnia': Key('w-7'),
+    'post man': Key('w-7'),
     'station': Key('w-8'),
+    'e-mails': Key('w-9'),
 
     ## Commonly used
     'Navy': Text('cd '),
+    'descend': Text('../'),
     'localhost <n>': Text('localhost:%(n)d')
 
     }

@@ -246,6 +246,7 @@ grammarCfg.cmd.map = Item(
         "[curly] braces": Key("lbrace, rbrace, left/3"),
         "(para)": Key("lparen, rparen, left/3"),
         "quotes": Key("dquote/3, dquote/3, left/3"),
+        "backtick": Key("backtick:1"),
         "backticks": Key("backtick:2, left"),
         "Quinn": Key("squote, squote, left/3"),
         "pillars": Text("||") + Key("left/3"),
@@ -282,7 +283,7 @@ grammarCfg.cmd.map = Item(
         "visual": Key("v"),
         "visual line": Key("s-v"),
         "visual block": Key("c-v"),
-        "doc save": Key("c-s"),
+        "sieve": Key("c-s"),
         "arrow": Text(" => "),
 
         #### Lines

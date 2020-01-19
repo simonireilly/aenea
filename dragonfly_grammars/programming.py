@@ -6,10 +6,12 @@ javascript_syntax = {
     # A constant or let
     'const ': Text('const '),
     'let ': Text('let '),
+    'key [<text>]': Text('%(text)s: '),
     # Easy console logging
-    'console log [<text>]': Text('console.log(%(text)s)'),
+    'console log [<text>]': Text('console.log('),
     # Easy ES6 importing
-    'import [<text>] from [<text_2>]': Text('import %(text)s from "%(text_2)s"')
+    'import [<text>] from [<text_2>]': Text('import %(text)s from "%(text_2)s"'),
+    'async': Text('async () => {')
 }
 
 general_syntax = {
@@ -26,9 +28,12 @@ html_syntax = {
 file_extensions = {
     'yaml file': Text('.yml'),
     'Jayson file': Text('.json'),
+    'JavaScript file': Text('.js'),
+    'typescript file': Text('.ts'),
     'embedded ruby file': Text('.erb'),
     'ruby file': Text('.rb'),
     'elixir file': Text('.ex'),
+    'Python file': Text('.py'),
     'embedded elixir file': Text('.eex'),
     'go file': Text('.go'),
 }

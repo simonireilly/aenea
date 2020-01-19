@@ -12,6 +12,7 @@ import cli_heroku
 import cli_node
 import cli_shift
 import cli_terminator
+import cli_typescript
 
 terminal_context = aenea.wrappers.AeneaContext(
     ProxyAppContext(match='regex', title='(?i).*simon@simon.*'), # app_id='Terminal'
@@ -69,6 +70,7 @@ grammar.add_rule(cli_elixir.ElixirRule())
 grammar.add_rule(cli_git.GitRule())
 grammar.add_rule(cli_heroku.HerokuRule())
 grammar.add_rule(cli_node.NodeRule())
+grammar.add_rule(cli_typescript.TypescriptRule())
 grammar.add_rule(cli_shift.ShiftRule())
 grammar.add_rule(cli_terminator.TerminatorRule())
 

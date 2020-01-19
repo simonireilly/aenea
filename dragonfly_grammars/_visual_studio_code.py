@@ -23,8 +23,6 @@ class VisualStudioCodeRule(MappingRule):
             'select instances': Key('a-f3'),
             # Jump between bracket
             'block': Key('c-m'),
-            # Select everything in bracket
-            'blocked': Key('cs-m'),
             # Adjoining lines
             'join [<n>]': Key('c-j:%(n)d'),
 
@@ -35,21 +33,12 @@ class VisualStudioCodeRule(MappingRule):
             # Auto-indent
             'indent': Key('cs-i'),
             # Show the file
-            'peak': Key('cs-a'),
-            # Toggle the tree
-            'timber': Key('ctrl:down, k, b, ctrl:up'),
+            'timber': Key('c-b'),
 
             ## File commands
 
             # Open a new file
             'new file': Key('c-n'),
-            # Find a file
-            # Set the language
-            # 'set language': Key('cs-l'),
-            # Expand selection
-            # 'puff [<n>]': Key('a-up:%(n)d'),
-            # Reduce selection
-            # 'duff [<n>]': Key('a-down:%(n)d'),
             # Toggle comment
             'note [<text>]': Key('c-slash') + Text('%(text)s'),
 
@@ -63,7 +52,6 @@ class VisualStudioCodeRule(MappingRule):
             # Close file
             'close file': Key('c-w'),
             # # Go to row
-            # 'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
 
             ## Manage windows
 
@@ -89,15 +77,6 @@ class VisualStudioCodeRule(MappingRule):
             'giant': Key('ctrl:down, k, u, ctrl:up'),
             # Transform it to lowercase
             'shrink': Key('ctrl:down, k, l, ctrl:up'),
-
-            ## Specific editor shortcuts
-
-            # For putting in html tags
-            'wrap': Key('as-w'),
-            # For closing specific html thanks
-            'seal': Key('a-dot'),
-
-
         }
     extras = [
         Dictation("text"),

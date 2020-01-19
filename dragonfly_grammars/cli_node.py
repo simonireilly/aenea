@@ -6,6 +6,7 @@ npmcommand = {
     "start": "start",
     "test": "test",
     "install": "install",
+    "install global": "install -g",
     "run demo": "run demo",
     "run test services": "run test-services",
     "run test integration": "run test-integration",
