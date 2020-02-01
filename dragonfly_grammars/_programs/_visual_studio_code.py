@@ -2,12 +2,12 @@
 
 from aenea import *
 
-sublime_text_context = aenea.wrappers.AeneaContext(
-    ProxyAppContext(match='regex', title='(?i).*Sublime Text.*'),
-    AppContext(executable='Sublime Text')
+visual_studio_code_context = aenea.wrappers.AeneaContext(
+    ProxyAppContext(match='regex', title='(?i).*Visual Studio Code.*'),
+    AppContext(executable='Visual Studio Code')
     )
 
-class SublimeTextRule(MappingRule):
+class VisualStudioCodeRule(MappingRule):
     '''source: http://docs.sublimetext.info/en/latest/reference/keyboard_shortcuts_win.html'''
     mapping = {
 
@@ -23,8 +23,6 @@ class SublimeTextRule(MappingRule):
             'select instances': Key('a-f3'),
             # Jump between bracket
             'block': Key('c-m'),
-            # Select everything in bracket
-            'blocked': Key('cs-m'),
             # Adjoining lines
             'join [<n>]': Key('c-j:%(n)d'),
 
@@ -35,21 +33,12 @@ class SublimeTextRule(MappingRule):
             # Auto-indent
             'indent': Key('cs-i'),
             # Show the file
-            'peak': Key('cs-a'),
-            # Toggle the tree
-            'timber': Key('ctrl:down, k, b, ctrl:up'),
+            'timber': Key('c-b'),
 
             ## File commands
 
             # Open a new file
             'new file': Key('c-n'),
-            # Find a file
-            # Set the language
-            # 'set language': Key('cs-l'),
-            # Expand selection
-            # 'puff [<n>]': Key('a-up:%(n)d'),
-            # Reduce selection
-            # 'duff [<n>]': Key('a-down:%(n)d'),
             # Toggle comment
             'note [<text>]': Key('c-slash') + Text('%(text)s'),
 
@@ -63,7 +52,6 @@ class SublimeTextRule(MappingRule):
             # Close file
             'close file': Key('c-w'),
             # # Go to row
-            # 'leap [<n>]': Key('c-g') + Text('%(n)s') + Key('enter'),
 
             ## Manage windows
 
@@ -83,21 +71,16 @@ class SublimeTextRule(MappingRule):
             # Moved between bookmarks
             'mark': Key('f2'),
 
-            ## Textual manipulation
+            # performed debugging
+            'debug': Key('f5'),
+
+            ## Terminal manipulation
+            'terminal': Key('c-backtick'),
 
             # Transform it to uppercase
             'giant': Key('ctrl:down, k, u, ctrl:up'),
             # Transform it to lowercase
             'shrink': Key('ctrl:down, k, l, ctrl:up'),
-
-            ## Specific editor shortcuts
-
-            # For putting in html tags
-            'wrap': Key('as-w'),
-            # For closing specific html thanks
-            'seal': Key('a-dot'),
-
-
         }
     extras = [
         Dictation("text"),
@@ -107,8 +90,8 @@ class SublimeTextRule(MappingRule):
         "n": 1,
     }
 
-grammar = Grammar("Sublime Text", context=sublime_text_context) # Create grammar
-grammar.add_rule(SublimeTextRule()) # Add the rule
+grammar = Grammar("Visual Studio Code", context=visual_studio_code_context) # Create grammar
+grammar.add_rule(VisualStudioCodeRule()) # Add the rule
 grammar.load()  # Load the grammar.
 
 def unload():

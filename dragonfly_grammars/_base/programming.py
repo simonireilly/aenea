@@ -11,7 +11,8 @@ javascript_syntax = {
     'console log [<text>]': Text('console.log('),
     # Easy ES6 importing
     'import [<text>] from [<text_2>]': Text('import %(text)s from "%(text_2)s"'),
-    'async': Text('async () => {')
+    'async': Text('async () => {'),
+    'sync': Text('() => {')
 }
 
 general_syntax = {
@@ -23,6 +24,7 @@ general_syntax = {
 
 html_syntax = {
     'Dave': Text('div'),
+    'gitHub': Text('gitHub'),
 }
 
 file_extensions = {
