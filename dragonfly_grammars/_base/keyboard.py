@@ -280,9 +280,6 @@ grammarCfg.cmd.map = Item(
         '(doll|dole)': Key('end'),
         'chuck [<n>]':       Key('del:%(n)d'),
         'tail [<n>]':     Key('backspace:%(n)d'),
-        "visual": Key("v"),
-        "visual line": Key("s-v"),
-        "visual block": Key("c-v"),
         "sieve": Key("c-s"),
         "arrow": Text(" => "),
 

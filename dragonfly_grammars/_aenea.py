@@ -23,6 +23,8 @@ import os
 import sys
 import shutil
 
+from distutils.dir_util import copy_tree
+
 import dragonfly
 
 try:
@@ -39,35 +41,34 @@ try:
     import aenea.config
     import aenea.configuration
 except ImportError:
-    print 'Unable to import Aenea client-side modules.'
+    print "Unable to import Aenea client-side modules."
     raise
 
-print 'Aenea client-side modules loaded successfully'
-print 'Settings:'
-print '\tHOST:', aenea.config.DEFAULT_SERVER_ADDRESS[0]
-print '\tPORT:', aenea.config.DEFAULT_SERVER_ADDRESS[1]
-print '\tPLATFORM:', aenea.config.PLATFORM
-print '\tUSE_MULTIPLE_ACTIONS:', aenea.config.USE_MULTIPLE_ACTIONS
-print '\tSCREEN_RESOLUTION:', aenea.config.SCREEN_RESOLUTION
+print "Aenea client-side modules loaded successfully"
+print "Settings:"
+print "\tHOST:", aenea.config.DEFAULT_SERVER_ADDRESS[0]
+print "\tPORT:", aenea.config.DEFAULT_SERVER_ADDRESS[1]
+print "\tPLATFORM:", aenea.config.PLATFORM
+print "\tUSE_MULTIPLE_ACTIONS:", aenea.config.USE_MULTIPLE_ACTIONS
+print "\tSCREEN_RESOLUTION:", aenea.config.SCREEN_RESOLUTION
 
 try:
     aenea.proxy_contexts._get_context()
-    print 'Aenea: Successfully connected to server.'
+    print "Aenea: Successfully connected to server."
 except:
-    print 'Aenea: Unable to connect to server.'
+    print "Aenea: Unable to connect to server."
 
 
 # Commands that can be rebound.
 command_table = [
-    'set proxy server to <proxy>',
-    'disable proxy server',
-    'enable proxy server',
-    'forcefield'
-    ]
+    "set proxy server to <proxy>",
+    "disable proxy server",
+    "enable proxy server",
+    "forcefield",
+]
 command_table = aenea.configuration.make_grammar_commands(
-    'aenea',
-    dict(zip(command_table, command_table))
-    )
+    "aenea", dict(zip(command_table, command_table))
+)
 
 
 def topy(path):
@@ -78,14 +79,14 @@ def topy(path):
 
 
 class DisableRule(dragonfly.CompoundRule):
-    spec = command_table['disable proxy server']
+    spec = command_table["disable proxy server"]
 
     def _process_recognition(self, node, extras):
         aenea.config.disable_proxy()
 
 
 class EnableRule(dragonfly.CompoundRule):
-    spec = command_table['enable proxy server']
+    spec = command_table["enable proxy server"]
 
     def _process_recognition(self, node, extras):
         aenea.config.enable_proxy()
@@ -114,9 +115,11 @@ def reload_code():
             path = topy(path)
 
             # Do not unimport this module!  This will cause major problems!
-            if (path.startswith(macro_dir) and
-                not bool(set(path.split(os.path.sep)) & dir_reload_blacklist)
-                and path != topy(os.path.abspath(__file__))):
+            if (
+                path.startswith(macro_dir)
+                and not bool(set(path.split(os.path.sep)) & dir_reload_blacklist)
+                and path != topy(os.path.abspath(__file__))
+            ):
 
                 print "removing %s from cache" % name
 
@@ -127,12 +130,13 @@ def reload_code():
 
     # Copy in the new source files from the remote directory
     #
-    src_files = os.listdir(source_dir)
-    for file_name in src_files:
-        full_file_name = os.path.join(source_dir, file_name)
-        if (os.path.isfile(full_file_name)):
-            shutil.copy(full_file_name, macro_dir)
-            print "copied %s" % full_file_name
+    for d, dirs, files in os.walk(source_dir):
+        for f in files:
+            full_file_name = os.path.join(d, f)
+            if os.path.isfile(full_file_name):
+                shutil.copy(full_file_name, macro_dir)
+                print "copied %s" % full_file_name
+
     try:
         # Reload the top-level modules in macro_dir if natlinkmain is available.
         if natlinkmain:
@@ -147,27 +151,30 @@ def reload_code():
 # also unloads all modules and packages in the macro directory so that they will
 # be reloaded the next time that they are imported.  It even reloads Aenea!
 class ReloadGrammarsRule(dragonfly.MappingRule):
-    mapping = {command_table['forcefield']: dragonfly.Function(reload_code)}
+    mapping = {command_table["forcefield"]: dragonfly.Function(reload_code)}
 
-server_list = dragonfly.DictList('aenea servers')
-server_list_watcher = aenea.configuration.ConfigWatcher(
-    ('grammar_config', 'aenea'))
+
+server_list = dragonfly.DictList("aenea servers")
+server_list_watcher = aenea.configuration.ConfigWatcher(("grammar_config", "aenea"))
 
 
 class ChangeServer(dragonfly.CompoundRule):
-    spec = command_table['set proxy server to <proxy>']
-    extras = [dragonfly.DictListRef('proxy', server_list)]
+    spec = command_table["set proxy server to <proxy>"]
+    extras = [dragonfly.DictListRef("proxy", server_list)]
 
     def _process_recognition(self, node, extras):
-        aenea.communications.set_server_address((extras['proxy']['host'], extras['proxy']['port']))
+        aenea.communications.set_server_address(
+            (extras["proxy"]["host"], extras["proxy"]["port"])
+        )
 
     def _process_begin(self):
         if server_list_watcher.refresh():
             server_list.clear()
-            for k, v in server_list_watcher.conf.get('servers', {}).iteritems():
+            for k, v in server_list_watcher.conf.get("servers", {}).iteritems():
                 server_list[str(k)] = v
 
-grammar = dragonfly.Grammar('aenea')
+
+grammar = dragonfly.Grammar("aenea")
 
 grammar.add_rule(EnableRule())
 grammar.add_rule(DisableRule())

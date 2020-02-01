@@ -6,7 +6,6 @@ from aenea import *
 import keyboard
 import words
 import programs
-import statics
 import programming
 
 release = Key("shift:up, ctrl:up, alt:up")
@@ -14,15 +13,13 @@ release = Key("shift:up, ctrl:up, alt:up")
 alternatives = []
 alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))
 alternatives.append(RuleRef(rule=words.FormatRule()))
-alternatives.append(RuleRef(rule=words.ReFormatRule()))
-alternatives.append(RuleRef(rule=words.NopeFormatRule()))
 alternatives.append(RuleRef(rule=programs.ProgramsRule()))
-alternatives.append(RuleRef(rule=statics.StaticsRule()))
 alternatives.append(RuleRef(rule=programming.ProgrammingRule()))
 root_action = Alternative(alternatives)
 
 
 sequence = Repetition(root_action, min=1, max=16, name="sequence")
+
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
@@ -47,6 +44,7 @@ class RepeatRule(CompoundRule):
 grammar = Grammar("root rule")
 grammar.add_rule(RepeatRule())  # Add the top-level rule.
 grammar.load()  # Load the grammar.
+
 
 def unload():
     """Unload function which will be called at unload time."""

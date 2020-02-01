@@ -6,3 +6,5 @@ server/linux_x11/config.py
 .idea
 
 statics.py
+
+dragon-onthefly
