@@ -1,9 +1,10 @@
-# The rules for the yarncript command line
+# The rules for the yarn command line
 
 from aenea import *
 
 yarncommand = {
     "version": "-v",
+    "test": "test",
     "help": "-h ",
     "add": "add",
     "initialize": "--init",
@@ -26,4 +27,4 @@ class YarnRule(MappingRule):
         Choice("yarncommand", yarncommand),
         Choice("modifiercommand", modifiercommand),
     ]
-    defaults = {"n": 1, "modifiercommand": ""}
+    defaults = {"n": 1, "text": "", "modifiercommand": ""}
