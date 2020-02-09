@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.com/dictation-toolbox/aenea.svg?branch=master
+    :target: https://travis-ci.com/dictation-toolbox/aenea
+
 =================
 Aenea
 =================
@@ -15,7 +18,7 @@ A system to allow speech recognition via Dragonfly on one computer to send event
 | ...and to Joel Gould for NatLink, making it possible...
 | ...and to the current maintainers of Natlink: Rudiger Wilke, Mark Lillibridge, and Quintijn Hoogenboom...
 | ...and to Christo Butcher and Dragonfly for making it easy...
-| ...and to Nuance for being so awesomly hack friendly...
+| ...and to Nuance for being so awesomely hack friendly...
 | (even if it means we have to write the grammars ourselves :-) )
 
 -------------------------------------------------------------------------------------------
@@ -23,7 +26,7 @@ A system to allow speech recognition via Dragonfly on one computer to send event
 Summary
 -------
 
-Aenea is a project to allow Dragonfly (a Python-based voice macro system for Windows) to send commands to another computer. Typically, this is used to run Dragonfly in a virtual machine while commands are sent to the host operating system. Currently only Linux hosts are fully supported, but a working subset of the functionality is available for Windows. The primary audience is system administrators and software engineers.
+Aenea is a project to allow Dragonfly (a Python-based voice macro system for Windows) to send commands to another computer. Typically, this is used to run Dragonfly in a virtual machine while commands are sent to the host operating system. Currently only Linux and OS X hosts are fully supported, but a working subset of the functionality is available for Windows. The primary audience is system administrators and software engineers.
 
 Current Features:
 
@@ -67,11 +70,11 @@ Getting Started
 Windows VM Software (versions given are ones I used, others likely work too):
 
 - Windows 7 Ultimate 32 bit
-- Dragon NaturallySpeaking Premium 12
-- NatLink 4.1echo
+- Dragon NaturallySpeaking Premium 12. (Version 13 also works, with noticeably better accuracy than 12!)
+- NatLink 4.1echo. 4.1whiskey also works. (look for Natlink download links here https://qh.antenna.nl/unimacro/installation/installation.html)
 - Python 2.7.5
 - pywin32-2.1.8
-- dragonfly-0.6.5
+- dragonfly2-0.8.0 (please read https://github.com/Danesprite/dragonfly#installation)
 - python-jsonrpclib-0.1.7
 - pyparsing-2.0.1
 
@@ -91,38 +94,40 @@ Operating system, Dragon, Natlink, and Dragonfly
 
 0) Install VirtualBox.
 
-1) Install Windows. I gave it 4 GB of RAM, two processors, and a 35 GB dynamically sized hard disk, of which it is using about 10 GB currently. While it's installing, I suggest you skim the Dragonfly documentation at https://code.google.com/p/dragonfly/
+1) Install Windows. It works well with 1 GB of RAM, two processors, and a 35 GB dynamically-sized hard disk, of which it is uses about 17-20 GB. (You can increase the RAM to speed up the installation process, and then lower it later to spare system resources.) While it's installing, I suggest you skim the Dragonfly documentation at http://dragonfly2.readthedocs.org/en/latest/
 
-2) Install Dragon, and create your profile according to their directions. IMPORTANT: Ensure that you select BestMatchIV when creating your profile. Recent versions of Dragon default to BestMatchV, which has substantially worse performance with the sorts of grammars we will be using with Dragonfly. I and others have had problems when creating a profile where only a few seconds into the volume check a pop-up appears complaining about the microphone. To get around this, I memorized the text and continued reading while clicking okay on the dialogue as soon as it appeared. I had to read the text seven or eight times speaking in an unnaturally loud voice to get past this step. You may have to try a few times. I believe this may be a side effect of the USB microphone going through the virtual machine, and as such you may consider creating your profile on a native Windows installation and then moving it over, however I have not tried this. You may also have issues getting past the microphone quality check, as I did, however it worked just fine after that.
+2) Install Dragon, and create your profile according to their directions. IMPORTANT: Ensure that you select BestMatchIV when creating your profile. Recent versions of Dragon default to BestMatchV, which has substantially worse performance with the sorts of grammars we will be using with Dragonfly.
+
+Note: I and others have had problems when creating a profile where only a few seconds into the volume check a pop-up appears complaining about the microphone. To get around this, I memorized the text and continued reading while clicking okay on the dialogue as soon as it appeared. I had to read the text seven or eight times speaking in an unnaturally loud voice to get past this step. You may have to try a few times. I believe this may be a side effect of the USB microphone going through the virtual machine, and as such you may consider creating your profile on a native Windows installation and then moving it over, however I have not tried this. You may also have issues getting past the microphone quality check, as I did, however it worked just fine after that.
 
 3) Install the other software mentioned above, and enable Natlink (by selecting GUI configuration from its start menu entry with Dragon closed). Make sure you install Python and dragonfly into paths with no spaces in them.
 
 4) In VirtualBox's networking settings, set the network to host-only adapter so the VM can't access the network and gets a subnet. If you don't do this, you will need to modify the client and server config files to specify the correct interface to connect to.
 
-4) Now when you start Dragon, a second small window with the title "Messages from NatLink" should pop up. If you have issues with this, take a look at the various forums that discuss using NatLink/Dragonfly on Windows.
+5) Now when you start Dragon, a second small window with the title ``Messages from NatLink`` should pop up. If you have issues with this, take a look at the various forums that discuss using NatLink/Dragonfly on Windows.
 
-5) You should now be able to run Natlink and Dragonfly grammars in the VM. Grammars are, by default, located in C:\\NatLink\\NatLink\\MacroSystem. NatLink will load any file named _*.py (where * is a wildcard). If your grammars depend on libraries, you can place them (not starting with an _) here. Your grammars will be able to import them, but NatLink will not attempt to load them directly.
+6) You should now be able to run Natlink and Dragonfly grammars in the VM. Grammars are, by default, located in ``C:\\NatLink\\NatLink\\MacroSystem``. NatLink will load any file named ``_*.py`` (where ``*`` is a wildcard). If your grammars depend on libraries, you can place them (not starting with an ``_``) here. Your grammars will be able to import them, but NatLink will not attempt to load them directly.
 
-6) Test that NatLink is working correctly. Copy aenea/client/_hello_world_natlink.py to C:\\NatLink\\NatLink\\MacroSystem and restart Dragon. In the "Messages from NatLink" window, you should see 'NatLink hello world module successfully loaded. All it does is print this message:-)' printed. This means that NatLink successfully loaded your grammar.
+7) Test that NatLink is working correctly. Copy ``aenea/client/_hello_world_natlink.py`` to ``C:\\NatLink\\NatLink\\MacroSystem`` and restart Dragon. In the ``Messages from NatLink`` window, you should see ``NatLink hello world module successfully loaded. All it does is print this message:-)`` typed out into Notepad. This means that NatLink successfully loaded your grammar. You can now delete the file you just created inside ``C:\\NatLink\\NatLink\\MacroSystem`` along with its corresponding ``.pyc`` file.
 
-8) Copy aenea/client/_hello_world_dragonfly.py into the MacroSystem folder, and turn your microphone off and on again. Now open Notepad (or similar) and say "test hello world grammar". The phrase 'Hello world grammar: recognition successful!' should be typed into the active window. If this doesn't work, try switching Dragon to command mode first. If it still doesn't work, try restarting Dragon. If it still doesn't work, then there is an issue with the setup of Dragon/NatLink/Dragonfly.
+9) Copy ``aenea/client/_hello_world_dragonfly.py`` into the MacroSystem folder, and turn your microphone off and on again. Now open Notepad (or similar) and say ``test hello world grammar``. The phrase ``Hello world grammar: recognition successful!`` should be typed into the active window. (If you are curious to see how it works, open the ``aenea/client/_hello_world_dragonfly.py`` file to have a look - this will be good preparation for your future grammar writing career :P). If this doesn't work, try switching Dragon to command mode first. If it still doesn't work, try restarting Dragon. If it still doesn't work, then there is an issue with the setup of Dragon/NatLink/Dragonfly. Once the ``recognition successful`` has been typed out into Notepad, you can now delete the file you just created inside ``C:\\NatLink\\NatLink\\MacroSystem`` along with its corresponding ``.pyc`` file.
 
-9) Delete the two test grammars. You're ready to move on to real ones in the next section!
+10) You're ready to move on to real ones in the next section! Jump to the server section that corresponds to your host operating system.
 
 Server (Linux X11)
 ~~~~~~~~~~~~~~~~~~
 
-0) Go to aenea/server/linux_x11
+0) Go to ``aenea/server/linux_x11``
 
-1) Copy config.py.example to config.py. Edit to suit. The default assumes you are using a host-only adapter for the VM which is NOT the default. Note that the HOST/PORT here must work with those specified in the client-side config (in most cases they will need to be identical).
+1) Copy ``config.py.example`` to ``config.py``. Edit to suit. The default assumes you are using a host-only adapter for the VM which is NOT the default. Note that the HOST/PORT here must work with those specified in the client-side config (in most cases they will need to be identical).
 
-2) Install the dependencies. Versions I used are in parentheses for reference; you probably don't need these exact versions for it to work. Install jsonrpclib (0.1.7), xdotool (3.20140213.1), xsel (1.2.0; optional but recommended), and yapsy (1.10.223-1; optional but recommended if you want server-side plugin support). Some window managers (xmonad) may require you to enable extended window manager hints for getcontext to work properly. On Awesome, it works out of the box.
+2) Install the dependencies. Versions I used are in parentheses for reference; you probably don't need these exact versions for it to work. Install ``jsonrpclib`` (0.1.7), ``xdotool`` (3.20140213.1), ``xprop`` (1.2.3), ``xsel`` (1.2.0; optional but recommended), and ``yapsy`` (1.10.223-1; optional but recommended if you want server-side plugin support). Some window managers (``xmonad``) may require you to enable extended window manager hints for getcontext to work properly. On Awesome, it works out of the box.
 
-3) Edit the server's config.py.example to specify the host and port it should listen on.
+3) Edit the server's ``config.py.example`` to specify the host and port it should listen on.
 
-4) Run server_x11.py. Specify -d if you want it to daemonize; default is to run in foreground.
+4) Run ``server_x11.py``. Specify -d if you want it to daemonize; default is to run in foreground.
 
-5) In a separate terminal (or the same one if you daemonized), cd to the linux_x11 dir and run test_client.py. This should type out some text like AABB and a dict describing the context of your terminal, move the mouse around, right click and drag, etc, to test it's all working. I tried not to make it too invasive but just in case, best not have anything you care about on screen! If this works, then the server is operational and accepting commands from clients. No point trying to get it to work with Dragon and the VM until it can accept local commands!
+5) In a separate terminal (or the same one if you daemonized), ``cd`` to the ``linux_x11`` dir and run ``test_client.py``. This should type out some text like ``AABB`` and a dict describing the context of your terminal, move the mouse around, right click and drag, etc, to test it's all working. I tried not to make it too invasive but just in case, best not have anything you care about on screen! If this works, then the server is operational and accepting commands from clients. No point trying to get it to work with Dragon and the VM until it can accept local commands!
 
 Server (Windows)
 ~~~~~~~~~~~~~~~~
@@ -135,48 +140,80 @@ Installation:
 
 - Install the Haskell Platform for Windows from http://www.haskell.org/platform.
 - Run the command ``cabal update``.
-- Run ``cabal install`` in the folder ...aenea\\WindowsServer\\aenea-windows-server to create aenea.exe in cabal's bin folder.
-- aenea.exe takes optional arguments specifying the IP address and port. These should match those on C:\\NatLink\\NatLink\\MacroSystem\\aenea.json.
+- Run ``cabal install`` in the folder ...``aenea\\WindowsServer\\aenea-windows-server`` to create aenea.exe in cabal's bin folder.
+- aenea.exe takes a required ``--security-token`` flag. It also takes optional flags specifying the IP address and port. These should match those on ``C:\\NatLink\\NatLink\\MacroSystem\\aenea.json``.
 - Set use_multiple_actions to false in aenea.json.
 
 Server (OS X)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Install:
-  - python
-  - pip install pyobjc   (this is required for py-applescript and will take a while.  no, a really, really long while)
-  - pip install py-applescript
-  
+  - ``python2``
+  - ``pip install pyobjc``   (this is required for py-applescript and will take a while.  no, a really, really long while)
+  - ``pip install py-applescript``
+
 Enable access for assistive devices in your system preferences
 
 
 Aenea client-side library
 ~~~~~~~~~~~~
-At this point, the folder C:\\NatLink\\NatLink\\MacroSystem should contain a folder named core.
+At this point, the folder ``C:\\NatLink\\NatLink\\MacroSystem`` should contain a folder named core (which would have been created after installing and enabling Natlink).
 
-0) Copy aenea/client/aenea into C:\\NatLink\\NatLink\\MacroSystem.
+0) Close Dragon and then copy ``aenea/client/aenea`` into ``C:\\NatLink\\NatLink\\MacroSystem``.
 
-1) Copy aenea/aenea.json.example into C:\\NatLink\\NatLink\\MacroSystem. Rename it to aenea.json and edit to suit.
+1) Copy ``aenea/aenea.json.example`` to ``aenea/aenea.json`` and edit to suit.
 
-1a) For aenea itself you have a choice -- you can either store its state and configuration files (these are used for keeping track of which dynamic vocabulary are currently active, which server to send commands to, etc) in C:\\Natlink\\NatLink\\MacroSystem, or you can store them elsewhere. If you store them in MacroSystem just edit aenea.json to suit and you're done. If you want to store it elsewhere (I put it on a shared folder mounted as the E drive so I can manage it from the host), then delete all the lines except 'project_root', and set its value to whatever directory you want to manage the config from. Then, in that directory, copy the full aenea.json.example and edit to taste. Basically on startup we first load C:\\NatLink\\NatLink\\MacroSystem\\aenea.json (hardcoded), then if the project_root specified is another directory we load aenea.json from that directory, overwriting any settings, and repeat until aenea.json specifies its own path (or a cycle which is an error). All other config files are relative to the project_root.
+2) Copy ``aenea/aenea.json`` into ``C:\\NatLink\\NatLink\\MacroSystem``.
 
-1b) If not using VirtualBox host only adapter as described above, you will need to set the host and port to the correct settings.
+2a) Optional Step: For aenea itself you have a choice -- you can either store its state and configuration files (these are used for keeping track of which dynamic vocabulary are currently active, which server to send commands to, etc) in ``C:\\Natlink\\NatLink\\MacroSystem``, or you can store them elsewhere. If you store them in ``MacroSystem`` just edit ``aenea.json`` to suit and you're done. If you want to store it elsewhere (I put it on a shared folder mounted as the ``E`` drive so I can manage it from the host), then delete all the lines except ``project_root``', and set its value to whatever directory you want to manage the config from. Then, in that directory, copy the full ``aenea.json.example`` and edit to taste. Basically on startup we first load ``C:\\NatLink\\NatLink\\MacroSystem\\aenea.json`` (hardcoded), then if the ``project_root`` specified is another directory we load ``aenea.json`` from that directory, overwriting any settings, and repeat until ``aenea.json`` specifies its own path (or a cycle which is an error). All other config files are relative to the ``project_root``.
 
-4) Copy aenea/client/_hello_world_aenea.py into C:\\NatLink\\NatLink\\MacroSystem, and restart Dragon. Now try saying "test hello world remote grammar". The text "Aenea remote setup operational" should be typed through the server, into whatever window is in the foreground (unless it is the VM itself.) The server will also print updates for every command received and executed to aid in debugging setup issues. If it doesn't work, check the NatLink window for backtraces as well. Note that the JSON-RPC library will serialize and return Python exceptions from the server to print in the NatLink window, so a backtrace in that window can be either from the client or the server.
+2b) If not using VirtualBox host only adapter as described above, you will need to set the host and port to the correct settings in all of the ``aenea.json`` files.
 
-5) If all's well, delete _hello_world_aenea.py.
+3) Copy ``aenea/client/_hello_world_aenea.py`` into ``C:\\NatLink\\NatLink\\MacroSystem``, and restart Dragon. Now try saying ``test hello world remote grammar``. The text ``Aenea remote setup operational`` should be typed through the server, into whatever window is in the foreground (unless it is the VM itself). The server will also print updates for every command received and executed to aid in debugging setup issues. If it doesn't work, check the NatLink window for backtraces as well. Note that the JSON-RPC library will serialize and return Python exceptions from the server to print in the NatLink window, so a backtrace in that window can be either from the client or the server.
+
+4) If all's well, delete ``_hello_world_aenea.py`` from ``MacroSystem``.
 
 Built-In Optional Modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 While optional, Aenea comes with two very useful modules.
 
-_aenea.py allows you to dynamically switch between local (i.e., in the VM) and remote (i.e., send to server), as well as changing which server commands are sent to (if you're using several different computers). It will also print useful information when the module is loaded such as the current networking settings. To install, just copy client/_aenea.py into the MacroSystem directory. It is configured in ROOT\\grammar_config\\aenea.json, there you can rebind commands and add or remove servers to connect to. It reads and writes ROOT\\server_state.json to keep track of which server is currently active.
+``_aenea.py`` allows you to dynamically switch between local (i.e., in the VM) and remote (i.e., send to server), as well as changing which server commands are sent to (if you're using several different computers). It will also print useful information when the module is loaded such as the current networking settings. To install, just copy ``client/_aenea.py`` into the MacroSystem directory. It is configured in ``ROOT\\grammar_config\\aenea.json``, there you can rebind commands and add or remove servers to connect to. It reads and writes ``ROOT\\server_state.json`` to keep track of which server is currently active.
 
-_vocabulary.py is used by most of my grammars, and allows multiple grammars to make use of the same set of vocabulary. (For example, one may want access to Python vocabulary both in a VIM grammar and a generic edit grammar). It makes use of ROOT\\vocabulary_config. ROOT\\vocabulary_config\\static contains vocabularies that are always enabled, and ROOT\\vocabulary_config\\dynamic contains vocabularies that may be switched on and off by the user at will. ROOT\\vocabulary_config\\enabled.json (read and written) keeps track of the current state of dynamic vocabularies. You can rebind the commands used to control vocabulary in ROOT\\grammar_config\\vocabulary.json. To install, just copy client/_vocabulary.py into the MacroSystem dir.
+``_vocabulary.py`` is used by most of my grammars, and allows multiple grammars to make use of the same set of vocabulary. (For example, one may want access to Python vocabulary both in a VIM grammar and a generic edit grammar). It makes use of ``ROOT\\vocabulary_config``. ``ROOT\\vocabulary_config\\static`` contains vocabularies that are always enabled, and ``ROOT\\vocabulary_config\\dynamic`` contains vocabularies that may be switched on and off by the user at will. ``ROOT\\vocabulary_config\\enabled.json`` (read and written) keeps track of the current state of dynamic vocabularies. You can rebind the commands used to control vocabulary in ``ROOT\\grammar_config\\vocabulary.json``. To install, just copy ``client/_vocabulary.py`` into the ``MacroSystem`` dir.
 
 Aenea Dictation Client (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Also available is a dictation capture client @poppe1219 wrote. This is simply a window that captures all keystrokes typed into it an relays them to the Linux host. If you disable Dragon's dictation box, you can dictate in Dragon's normal mode with the capture client in the foreground in Windows. Dragon will then type into the client, which will send the keystrokes to the server. You can still use grammars with the client in the foreground. To use, just copy client/aenea_client.py to MacroSystem and run it. By default, all grammars will only work when the client is in the foreground. You can change this behavior in aenea.json by setting restrict_proxy_to_aenea_client to false.
+Also available is a dictation capture client @poppe1219 wrote. This is simply a window that captures all keystrokes typed into it an relays them to the Linux host. If you disable Dragon's dictation box, you can dictate in Dragon's normal mode with the capture client in the foreground in Windows. Dragon will then type into the client, which will send the keystrokes to the server. You can still use grammars with the client in the foreground. To use, just copy ``client/aenea_client.py`` to ``MacroSystem`` and run it. By default, all grammars will only work when the client is in the foreground. You can change this behavior in ``aenea.json`` by setting ``restrict_proxy_to_aenea_client`` to ``false``.
+
+Aenea Recognition Results Plugin (optional, for linux_x11)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While using Aenea, the results of the recognition can be viewed by inspecting the server's output in a terminal. However, this requires constant task-switching. The Recognition Results plugin displays the latest recognized phrase in a small GUI that stays on top of all the windows.
+
+.. image:: https://raw.githubusercontent.com/facundoq/aenea_recognition_results/master/demo_small.gif
+
+The Recognition Results requires ``Tk`` and the corresponding bindings installed in the same python distribution used for Aenea. These can be easily acquired in Ubuntu/Debian by executing ``sudo apt install python-tk`` or ``sudo pacman -S tk`` in Arch-based distributions.
+
+To install the plugin:
+
+1) Copy ``client/_recognition_results_observer.py`` to ``MacroSystem`` in the guest VM. This grammar sends the recognition results to the server.
+2) Check that the following files exist in the server:
+  1) ``server/linux_x11/plugins/recognition_results.yapsy-plugin``
+  2) ``server/linux_x11/plugins/recognition_results/config.py``
+  3) ``server/linux_x11/plugins/recognition_results/__init__.py``
+  4) ``server/linux_x11/plugins/recognition_results/recognitionbar_tk.py``
+3) Give execute permissions to the file ``recognitionbar_tk.py`` (``chmod +x recognitionbar_tk.py``)
+4) Open the file ``config.py`` and modify the variable ``enabled`` to the value ``True`` (``enabled = True``)
+5) Configure the appearance of the bar in ``config.py`` (optional). By default, the assigned window type is ``dock`` and the window is set to show always on top. You can use your window manager to provide additional customization, such as showing the window in all desktops.
+
+If you need to reopen the recognition bar window, just execute ``recognitionbar_tk.py``. 
+
+Please note that the plugin uses a local file (``~/.aenea_phrases.log`` by default) in the server to communicate the results from Aenea to the Recognition Bar GUI application. This file stores in plain text the results of your speech. If security or privacy of what you input is a concern, you should delete this file regularly or take other appropriate measures. The location of the file can be modified in ``config.py``.
+
+Virtualbox usb passthrough to reduce latency(optional)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using pulseaudio can lead to significant latencies and audio drifts between the host and the VM. This can be avoided by either switching to alsa-audio or by directly passing through your audio device do the VM. This can easily be achieved by installing the virtualbox extensions on the host machine and adding your user to the `vboxusers group <https://superuser.com/questions/956622/no-usb-devices-available-in-virtualbox>`_ : ``sudo adduser $USER vboxusers``
+
 
 Snapshot and backup (MANDATORY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -186,14 +223,14 @@ This is a brittle setup. Part of why I went with a Windows VM and remote connect
 Security
 ----------------
 
-Virtual machines have a nasty tendency to not be up-to-date and at any rate they increase the attack surface. Therefore I recommend that you select "Host-only adapter" in virtual box so that the virtual machine can only connect to your computer and not to the Internet, thus limiting its potential to get compromised.
+Virtual machines have a nasty tendency to not be up-to-date and at any rate they increase the attack surface. Therefore I recommend that you select ``Host-only adapter`` in virtual box so that the virtual machine can only connect to your computer and not to the Internet, thus limiting its potential to get compromised.
 
 Please remember that the server simply accepts any connection made to it and will execute the commands given, that command streams are neither authenticated nor encrypted, and that the server is not written to deal with untrusted clients. I hope to address authentication and encryption in the future (I see little point to dealing with untrusted clients given they literally control your computer), but for now I strongly suggest only running the system on a network interface you trust (i.e., VirtualBox's subnet). Be careful that other virtual machines you may run on the same system cannot access it, if you are concerned about security.
 
 Using Aenea-Aware Modules
 -------------------------
 
-Drop them in C:\\NatLink\\NatLink\\MacroSystem\\ along with anything they depend on. In theory you can just say "force natlink to reload all grammars" (if you are using the _aenea module), but if anything goes wrong just restart Dragon.
+Drop them in ``C:\\NatLink\\NatLink\\MacroSystem`` along with anything they depend on. In theory you can just say ``force natlink to reload all grammars`` (if you are using the ``_aenea.py`` module mentioned further above), but if anything goes wrong just restart Dragon.
 
 Using Dragonfly Modules
 --------------------------
@@ -201,7 +238,7 @@ Using Dragonfly Modules
 To make a dragonfly module work with Aenea, add the line::
 
       from aenea.strict import *
-      
+
 to the top of the file below the rest of the imports. This will replace Dragonfly's action and context classes with those from Aenea. Some dragonfly modules make use of actions or context features that require modification to work with Aenea, or will not work at all. This of course assumes * import style was used for dragonfly in the module.
 
 Non-exhaustive list of Dragonfly modules that should work (with the above change):
@@ -221,7 +258,7 @@ Aenea provides several classes which take an action via the proxy server. Their 
 - ProxyAppContext -- provides an AppContext that lets you match on the title, window class/window class name, etc of the currently active window on the host. This tries to be a drop-in replacement for AppContext, but can't quite work the same way since we need to take X11 properties into account.
 - ProxyCustomAppContext -- provides a custom context that allows querying by any value the server provides. See the docstring for details.
 - ProxyCrossPlatformContext -- chooses between one of several contexts based on what OS the server reports is running. Pass in a dict-like from OS to Context. Note that the OS is queried dynamically -- whenever we use the context, so you can use this if you need to switch between servers.
-- ProxyPlatformContext -- chooses between one of two contexts based on whether or not we are currently sending commands to the proxy server -- so you can use the same grammer on the VM/local machine and via proxy.
+- ProxyPlatformContext -- chooses between one of two contexts based on whether or not we are currently sending commands to the proxy server -- so you can use the same grammar on the VM/local machine and via proxy.
 - ProxyKey, ProxyMouse, ProxyText -- very similar to Dragonfly's, but support additional functionality (e.g., the Key can accept Linux keysyms as well as Dragonfly ones). See their docstrings for details.
 - ProxyMousePhantomClick -- Move mouse to a location, click, return. From the user's perspective, click without moving the mouse.
 

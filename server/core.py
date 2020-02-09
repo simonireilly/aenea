@@ -6,6 +6,71 @@ import logging.config
 from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
 
 
+class PermissionDeniedError(Exception):
+    pass
+
+
+def compare_security_token(expected, actual):
+    if not hasattr(actual, "__len__") or len(expected) != len(actual):
+        return False
+    result = 0
+    for x, y in zip(expected, actual):
+        result |= ord(x) ^ ord(y)
+    return result == 0
+
+
+class AeneaJSONRPCServer(SimpleJSONRPCServer):
+
+    def __init__(self, security_token, *args, **kwargs):
+        self.security_token = security_token
+        self.logger = logging.getLogger("server")
+        SimpleJSONRPCServer.__init__(self, *args, **kwargs)
+
+    def _check_security_token(self, security_token):
+        if self.security_token is None:
+            self.logger.warn('Server is configured to disable checking security tokens. You can use generate_security_token.py to generate a security token, which you should then add to config.py (client) and aenea.json (server). This message is intentionally spammy and annoying -- you need to fix this.')
+            return
+
+        if security_token is None:
+            error_text = 'Client did not send a security token, but server has security token set. To fix, find the client\'s aenea.json and add security_token: "foo", to it, then restart Dragon. You will need to replace foo with the server\'s security token, which you can find in config.py. Or generate a new random one with generate_security_token.py and set it in both client and server.'
+            self.logger.error(error_text)
+            raise PermissionDeniedError(error_text)
+        elif not compare_security_token(self.security_token, security_token):
+            error_text = 'Client sent a security token, but it did not match the server\'s. The server\'s is specified in config.py. The client\'s is specified in aenea.json. Use generate_security_token.py to create a random token.'
+            self.logger.error(error_text)
+            raise PermissionDeniedError(error_text)
+        else:
+            pass
+
+    def register_function(self, rpc_func, rpc_name=None):
+        # Patch each registered function to check if the security token
+        # matches.
+        def patched_rpc_func(*args, **kwargs):
+            assert not (args and kwargs)
+
+            # Pop the security token from args or kwargs.
+            if args:
+                args = list(args)
+                rpc_security_token = args.pop(len(args) - 1)
+            elif "security_token" in kwargs:
+                rpc_security_token = kwargs.pop("security_token")
+            else:
+                rpc_security_token = None
+
+            # Check the security token argument.
+            self._check_security_token(rpc_security_token)
+
+            # Run the RPC function if the security token was acceptable.
+            return rpc_func(*args, **kwargs)
+
+        # Preserve the function's name.
+        patched_rpc_func.__name__ = rpc_func.__name__
+
+        return SimpleJSONRPCServer.register_function(
+            self, patched_rpc_func, rpc_name
+        )
+
+
 class AeneaServer(object):
     """
     AeneaServer is a jsonrpc server that exposes emulated keyboard/mouse input
@@ -39,6 +104,8 @@ class AeneaServer(object):
         for plugin in plugins:
             plugin.register_rpcs(self.server)
 
+        self.rpc_impl = rpc_impl
+
     @classmethod
     def from_config(cls, platform_rpcs, config):
         """
@@ -54,8 +121,9 @@ class AeneaServer(object):
                 log_file=getattr(config, 'LOG_FILE', None))
         logger = logging.getLogger(AeneaLoggingManager.aenea_logger_name)
 
-        rpc_server = SimpleJSONRPCServer(
-                (config.HOST, config.PORT), logRequests=False)
+        security_token = getattr(config, 'SECURITY_TOKEN', None)
+        rpc_server = AeneaJSONRPCServer(
+            security_token, (config.HOST, config.PORT), logRequests=False)
 
         # TODO: dynamically load/instantiate platform_rpcs from config instead
         # of requiring it as an explicit argument
@@ -73,7 +141,9 @@ class AeneaServer(object):
     def multiple_actions(self, actions):
         """
         Execute multiple rpc commands, aborting on any error. Guaranteed to
-        execute in specified order. See also JSON-RPC multicall.
+        execute in specified order. See also JSON-RPC multicall. Annoyingly, we
+        currently need to check the security token both for the multicall and
+        in the RPCs, so it must be specified for both.
         :param list actions:  List of dicts.  Each dictionary must provide
           "method", "optional", and "parameters" keys. e.g.
           ..code python
@@ -85,7 +155,6 @@ class AeneaServer(object):
         :return: This function always returns None
         :rtype: None
         """
-
         for (method, parameters, optional) in actions:
             if method in self.server.funcs:
                 # JSON-RPC forbids specifying both optional and parameters.
@@ -302,6 +371,10 @@ class AeneaLoggingManager(object):
                 'propagate': True
             },
             aenea_logger_name: {
+                'level': 'DEBUG',
+                'handlers': ['console']
+            },
+            "server": {
                 'level': 'DEBUG',
                 'handlers': ['console']
             }

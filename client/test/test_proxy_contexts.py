@@ -18,19 +18,11 @@
 import unittest
 import mock
 
-from aenea.proxy_contexts import *
+from aenea.proxy_contexts import ProxyCustomAppContext, VALUE_DONT_CARE, VALUE_SET, VALUE_NOT_SET
 
 
 def match(ctx):
     return ctx.matches(None, None, None)
-
-
-class TestTrivialContexts(unittest.TestCase):
-    def test_always(self):
-        self.assertTrue(match(AlwaysContext()))
-
-    def test_never(self):
-        self.assertFalse(match(NeverContext()))
 
 
 class TestProxyCustomAppContext(unittest.TestCase):

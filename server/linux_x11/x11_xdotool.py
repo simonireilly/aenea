@@ -90,6 +90,7 @@ _KEY_TRANSLATION = {
     'dquote': 'quotedbl',
     'enter': 'Return',
     'equal': 'equal',
+    'equals': 'equal',
     'exclamation': 'exclam',
     'hash': 'numbersign',
     'hyphen': 'minus',
@@ -119,6 +120,9 @@ _KEY_TRANSLATION = {
     'tilde': 'asciitilde',
     'underscore': 'underscore',
     'win': 'Super_L',
+    'pagedown': 'Next',
+    'pageup': 'Prior',
+
 }
 
 
@@ -222,7 +226,6 @@ class XdotoolPlatformRpcs(AbstractAeneaPlatformRpcs):
         '''return a dictionary of window properties for the currently active
            window. it is fine to include platform specific information, but
            at least include title and executable.'''
-
         self.flush_xdotool(_xdotool)
         window_id, window_title = self.get_active_window()
         if window_id is None:
@@ -293,7 +296,6 @@ class XdotoolPlatformRpcs(AbstractAeneaPlatformRpcs):
         mouse there and click. Currently, phantom only works with absolute
         moves. Negative coordinates are allowed for all references; in the
         case of absolute they will be clamped to 0.'''
-
         geo = self.get_geometry()
         if proportional:
             x = geo['width'] * x
@@ -324,7 +326,6 @@ class XdotoolPlatformRpcs(AbstractAeneaPlatformRpcs):
         '''click the mouse button specified. button maybe one of 'right',
            'left', 'middle', 'wheeldown', 'wheelup'. This X11 server will
            also accept a number.'''
-
         if count_delay is None or count < 2:
             delay = ''
         else:
@@ -351,7 +352,6 @@ class XdotoolPlatformRpcs(AbstractAeneaPlatformRpcs):
            is True, will use X11 PRIMARY clipboard to paste the text instead
            of typing it. See config.ENABLE_XSEL documentation for more
            information on this.'''
-
         # Workaround for https://github.com/jordansissel/xdotool/pull/29
         if text:
             if paste and config.ENABLE_XSEL:
@@ -362,7 +362,7 @@ class XdotoolPlatformRpcs(AbstractAeneaPlatformRpcs):
                 # copy the pasted text to the clipboard
                 self.write_command(text, arguments='-i', executable='xsel')
 
-                # paste by simulating midde click
+                # paste by simulating middle click
                 # TODO: can we do this even in programs that don't have a
                 #     middle click?
                 #     if not, we may need a blacklist of buggy programs.
