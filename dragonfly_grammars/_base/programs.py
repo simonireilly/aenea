@@ -38,8 +38,6 @@ class ProgramsRule(MappingRule):
     'editor': Key('w-5'),
     'music': Key('w-6'),
     'post man': Key('w-7'),
-    'station': Key('w-8'),
-    'e-mails': Key('w-9'),
 
     ## Commonly used
     'Navy': Text('cd '),
