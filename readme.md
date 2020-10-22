@@ -1,15 +1,21 @@
 # Aenea
 
-This is my fork of aenea voice coding system.
+This is my fork of aenea voice coding system. I use this predominantly for web development. My Grammars have been written around the following programs:
 
-I use this predominantly for web development. 
+Learn more about voice coding:
 
-My Grammars have been written around the following programs:
+- State of the art: [Frontend develoeprs who code by voice (Oct 2020)](https://joshwcomeau.com/accessibility/hands-free-coding/)
+- The original inspiration and implementor: [Tavis Rudd Pycon (Mar 2013)](https://www.youtube.com/watch?v=8SkdfdXWYaI)
+
+## Operating Systems
+
+- Ubuntu (20.04)
 
 ## Text Editors
 
 - Atom
 - Sublime
+- VSCode
 
 ## Browsers
 
